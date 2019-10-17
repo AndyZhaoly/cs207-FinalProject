@@ -1,24 +1,23 @@
+# Milestone 1 Document
+
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+**Table of Contents**
 
-- [Milestone 1 Document](#milestone-1-document)
-  - [Introduction](#introduction)
-  - [Background](#background)
-    - [Prompt](#prompt)
-    - [Response](#response)
-  - [How to Use <PACKAGE NAME>](#how-to-use-package-name)
-    - [Prompt](#prompt-1)
-    - [Response](#response-1)
-  - [Software Organization](#software-organization)
-    - [Prompt](#prompt-2)
-    - [Response](#response-2)
-  - [Implementation](#implementation)
-    - [Prompt](#prompt-3)
+- [Introduction](#introduction)
+- [Background](#background)
+  - [Prompt](#prompt)
+  - [Response](#response)
+- [How to Use <PACKAGE NAME>](#how-to-use-package-name)
+  - [Prompt](#prompt-1)
+  - [Response](#response-1)
+- [Software Organization](#software-organization)
+  - [Prompt](#prompt-2)
+  - [Response](#response-2)
+- [Implementation](#implementation)
+  - [Prompt](#prompt-3)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
-
-# Milestone 1 Document
 
 ## Introduction
 
