@@ -16,6 +16,7 @@
   - [Response](#response-2)
 - [Implementation](#implementation)
   - [Prompt](#prompt-3)
+  - [Response](#response-3)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -68,3 +69,5 @@ Discuss how you plan on implementing the forward mode of automatic differentiati
 - What external dependencies will you rely on?
 - How will you deal with elementary functions like `sin`, `sqrt`, `log`, and `exp` (and all the others)?
 - Be sure to consider a variety of use cases. For example, don't limit your design to scalar functions of scalar values. Make sure you can handle the situations of vector functions of vectors and scalar functions of vectors. Don't forget that people will want to use your library in algorithms like Newton's method (among others).
+
+### Response
