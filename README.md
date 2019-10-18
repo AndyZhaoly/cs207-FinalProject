@@ -29,10 +29,16 @@ The team comprises
 
 ### Current Tasks
 
-- [ ] Verify that all team members have full access to the repo (**Tues Oct 29**) [Andrew]
-- [ ] Do up Travis CI and CodeCov status badges (**Tues Oct 29**)
-- [ ] Fill out the [google form](https://docs.google.com/forms/d/e/1FAIpQLSe1pI1Cy0T-ln4niL8O4paK75yFdDiy9B7t8Ze8U3l-t6iyIQ/viewform) (**Tues Oct 29**)
-- [ ] Finish `milestone1` under the `docs/` directory (**Tues Oct 29**)
+- [x] Verify that all team members have full access to the repo (**Tues Oct 29**) [Andrew]
+- [ ] Do up Travis CI and CodeCov status badges (**Tues Oct 29**) [Wei-Hung]
+- [ ] Fill out the [google form](https://docs.google.com/forms/d/e/1FAIpQLSe1pI1Cy0T-ln4niL8O4paK75yFdDiy9B7t8Ze8U3l-t6iyIQ/viewform) (**Tues Oct 29**) [Andrew]
+- [ ] Finish `milestone1` under the `docs/` directory (**Target: 24 Oct**) (**Tues Oct 29**)
+  - Introduction [Andrew]
+  - Background [Andrew]
+  - How to Use [Ankith]
+  - Software Organization [Wei-Hung]
+  - Implementation [Will]
+  - Cleanup [Andrew]
 
 ### Milestone 1 Deliverables
 
