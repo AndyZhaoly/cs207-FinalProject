@@ -72,7 +72,7 @@ Discuss how you plan on implementing the forward mode of automatic differentiati
 
 ### Response
 
-1. Create class *ForwardMode* that keeps track of expression value and derivative(s) and updates these values as operations are applied to a *ForwardMode* object. The constructor takes in the value of the expression (e.g 2.0) and a dictionary that contains the partial derivatives of all the distinct variables in the expression (e.g. {x: 1, y: 0}) and sets this value and dictionary to be attributes. Then, a method will be created for each binary and unary operator that can be applied to a *ForwardMode* object. Unary methods include: *__neg__*, *sin*, *cos*, *tan*, *log*, *log10*, *exp* and *sqrt*. This means that when a *ForwardMode* object is passed into a numpy function such as np.sin, the *sin* method with be called instead of np.sin. All these methods will do two things: first, they'll update the value attribute of the *ForwardMode* object, and second they'll update the partial derivatives of the dictionary attribute. As a concrete example, the *sin* method will return a new *ForwardMode* object where the value is np.sin(self.value) and the partial derivative dictionary is {variable: np.cos(self.value) \* derivative for variable, derivative in self.derivative_dict.items()}. Meanwhile, binary methods include: *__add__*, *__radd__*, *__sub__*, *__rsub__*, *__mul__*, *__rmul__*, *__truediv__*, *__rtruediv__*, *__pow__* and *__rpow__*. For these methods, duck typing will be used to determine whether the other argument is a *ForwardMode* object or a numerical obnject (i.e. integer or float). As a concrete example, the *__add__* , method will first try to add the *value* attributes of the given *ForwardMode* object and the object passed in and will try to add their partial derivatives for each variable. However, if this results in an AttributeError (i.e. if the object passed in is not a *ForwardMode* object), then the value of the new *ForwardMode* object will be the *value* attribute of the given *ForwardMode* object plus the object passed in, and the dictionary of partial derivatives will remain the same. Because addition is a commutative operation, the *__radd__* method will simply return *self + argument*.
+1. Create class *ForwardMode* that keeps track of expression value and derivative(s) and updates these values as operations are applied to a *ForwardMode* object. The constructor takes in the value of the expression (e.g 2.0) and a dictionary that contains the partial derivatives of all the distinct variables in the expression (e.g. {x: 1, y: 0}) and sets this value and dictionary to be attributes. Then, a method will be created for each binary and unary operator that can be applied to a *ForwardMode* object. Unary methods include: *\_\_neg\_\_*, *sin*, *cos*, *tan*, *log*, *log10*, *exp* and *sqrt*. This means that when a *ForwardMode* object is passed into a numpy function such as np.sin, the *sin* method with be called instead of np.sin. All these methods will do two things: first, they'll update the value attribute of the *ForwardMode* object, and second they'll update the partial derivatives of the dictionary attribute. As a concrete example, the *sin* method will return a new *ForwardMode* object where the value is np.sin(self.value) and the partial derivative dictionary is {variable: np.cos(self.value) \* derivative for variable, derivative in self.derivative_dict.items()}. Meanwhile, binary methods include: *__add__*, *\_\_radd\_\_*, *\_\_sub\_\_*, *\_\_rsub\_\_*, *\_\_mul\_\_*, *\_\_rmul\_\_*, *\_\_truediv\_\_*, *\_\_rtruediv\_\_*, *\_\_pow\_\_* and *\_\_rpow\_\_*. For these methods, duck typing will be used to determine whether the other argument is a *ForwardMode* object or a numerical obnject (i.e. integer or float). As a concrete example, the *\_\_add\_\_* , method will first try to add the *value* attributes of the given *ForwardMode* object and the object passed in and will try to add their partial derivatives for each variable. However, if this results in an AttributeError (i.e. if the object passed in is not a *ForwardMode* object), then the value of the new *ForwardMode* object will be the *value* attribute of the given *ForwardMode* object plus the object passed in, and the dictionary of partial derivatives will remain the same. Because addition is a commutative operation, the *\_\_radd\_\_* method will simply return *self + argument*.
 
 2.	Next, an expression that is a function of an arbitrary number of variables will be passed in and broken into a list of its constituent parts. For example, 'exp(-(sin(x) – cos(y)) \*\* 2)' will be processed by class *ParseExpression* and transformed to ['(', 'exp', '(', '-', '(', 'sin', '(', 'x', ')', '-', 'cos', '(', 'y', ')', ')', '\*\*', '2', ')', ')']  
 
@@ -111,7 +111,6 @@ attributes:
 - *derivative_dictionary*
 
 methods:
-- *__neg__*
 - *sin*
 - *cos*
 - *tan*
@@ -119,16 +118,17 @@ methods:
 - *log10*
 - *exp*
 - *sqrt*
-- *__add__*
-- *__radd__*
-- *__sub__*
-- *__rsub__*
-- *__mul__*
-- *__rmul__*
-- *__truediv__*
-- *__rtruediv__*
-- *__pow__* 
-- *__rpow__*
+- *\_\_neg\_\_*
+- *\_\_add\_\_*
+- *\_\_radd\_\_*
+- *\_\_sub\_\_*
+- *\_\_rsub\_\_*
+- *\_\_mul\_\_*
+- *\_\_rmul\_\_*
+- *\_\_truediv\_\_*
+- *\_\_rtruediv\_\_*
+- *\_\_pow\_\_* 
+- *\_\_rpow\_\_*
 
 External dependencies: 
 - numpy
