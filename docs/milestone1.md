@@ -85,14 +85,15 @@ Discuss how you plan on implementing the forward mode of automatic differentiati
 	* Numeric value or variable (e.g. x, y) -> set node value to given number or variable (literally 'x' or 'y', etc.) and move up to parent node
 
 4. Implement the forward mode by performing the following steps on the binary tree created in step 3 (refer to this function as *evaluate_tree*):
-	a. get the left and right children of the root node
-	b. if there is no left or right child this means that the give node is a leaf, so this node value should be evaluated: a numeric node value simply evaluates to that number, while a node value that is a variable (i.e. 'x' or 'y') is evaluated by creating a *ForwardMode* object where the *value* attribute is set to the value at which the given variable is to be evaluated and the dictionary of partial derivatives is created such that the value corresponding to all the variable keys is 0 except for the value corresponding to the node variable, which is set to 1 (i.e. if there are 3 variables, 'x', 'y' and 'z', and the node value is 'y', then the following partial derivative dictionary is created: {'x': 0, 'y': 1, 'z': 0}).
-	c. if there is no right child (but there is a left child), then this means that the value stored at the given node is a unary operator. Evaluating this node amounts to applying the given unary operator to the *ForwardMode*object that results from recursively applying this function (*evaluate_tree*) to the left tree of the given node. 
-	d. if there is both a right child and a left child, then this means that the value stored at the given note is a binary operator. Evaluating this node amounts to applying the given binary operator to the *ForwardMode* objects that result from recursively applying this function (*evaluate_tree*) to both the left tree and the right tree of the given node. 
+	* get the left and right children of the root node
+	* if there is no left or right child this means that the give node is a leaf, so this node value should be evaluated: a numeric node value simply evaluates to that number, while a node value that is a variable (i.e. 'x' or 'y') is evaluated by creating a *ForwardMode* object where the *value* attribute is set to the value at which the given variable is to be evaluated and the dictionary of partial derivatives is created such that the value corresponding to all the variable keys is 0 except for the value corresponding to the node variable, which is set to 1 (i.e. if there are 3 variables, 'x', 'y' and 'z', and the node value is 'y', then the following partial derivative dictionary is created: {'x': 0, 'y': 1, 'z': 0}).
+	* if there is no right child (but there is a left child), then this means that the value stored at the given node is a unary operator. Evaluating this node amounts to applying the given unary operator to the *ForwardMode*object that results from recursively applying this function (*evaluate_tree*) to the left tree of the given node. 
+	* if there is both a right child and a left child, then this means that the value stored at the given note is a binary operator. Evaluating this node amounts to applying the given binary operator to the *ForwardMode* objects that result from recursively applying this function (*evaluate_tree*) to both the left tree and the right tree of the given node. 
 
-Overview of classes:
+### Overview of classes:
 
 *ParseTree* class:
+
 attributes: 
 - *expression* (in form of list created in step 1)
 - *variables* dictionary that maps all variables in expression to the value at which they are to be evaluated
@@ -130,7 +131,7 @@ methods:
 - *\_\_pow\_\_* 
 - *\_\_rpow\_\_*
 
-External dependencies: 
+### External dependencies: 
 - numpy
 - operator module so that binary operators can be expressed as operator.xxxx(argument1, argument2)
 - pythonds.trees -> for access to BinaryTree class
