@@ -77,12 +77,12 @@ Discuss how you plan on implementing the forward mode of automatic differentiati
 2.	Next, an expression that is a function of an arbitrary number of variables will be passed in and broken into a list of its constituent parts. For example, 'exp(-(sin(x) – cos(y)) \*\* 2)' will be processed by class *ParseExpression* and transformed to ['(', 'exp', '(', '-', '(', 'sin', '(', 'x', ')', '-', 'cos', '(', 'y', ')', ')', '\*\*', '2', ')', ')']  
 
 3. Next, the list that was generated in step 2 will be converted into a binary tree. This will be achieved by iterating over the elements of the list in order and following the following rules:
-	a. Beginning of list -> create tree with empty root node
-	b. Left parentheses ('(') -> insert left child with node value left blank and move down to this new left child
-	c. Right perentheses (')') -> move up tree to parent node
-	d. Binary operator ('+', '-', '\*', '/', '\*\*') -> set node value to given binary operator and insert right child with node value left blank. Then move down to this new right child 
-	e. Unary operator ('exp', 'sin', 'cos', 'tan', 'log', 'log10', 'sqrt', 'neg') -> set note value to given unary operator and insert left child with node value left blank (this subtree will not have a right child). Then move down to this new left child
-	f. Numeric value or variable (e.g. x, y) -> set node value to given number or variable (literally 'x' or 'y', etc.) and move up to parent node
+	* Beginning of list -> create tree with empty root node
+	* Left parentheses ('(') -> insert left child with node value left blank and move down to this new left child
+	* Right perentheses (')') -> move up tree to parent node
+	* Binary operator ('+', '-', '\*', '/', '\*\*') -> set node value to given binary operator and insert right child with node value left blank. Then move down to this new right child 
+	* Unary operator ('exp', 'sin', 'cos', 'tan', 'log', 'log10', 'sqrt', 'neg') -> set note value to given unary operator and insert left child with node value left blank (this subtree will not have a right child). Then move down to this new left child
+	* Numeric value or variable (e.g. x, y) -> set node value to given number or variable (literally 'x' or 'y', etc.) and move up to parent node
 
 4. Implement the forward mode by performing the following steps on the binary tree created in step 3 (refer to this function as *evaluate_tree*):
 	a. get the left and right children of the root node
