@@ -24,7 +24,7 @@ The team comprises
 + Wei-Hung Hsu
 
 ## Status Badges for Travis CI and CodeCov
-[![Build Status](https://travis-ci.org/CS207-Feiyu-Group8/cs207-FinalProject.svg?branch=master)](https://travis-ci.org/CS207-Feiyu-Group8/cs207-FinalProject.svg?branch=master)
+[![Build Status](https://travis-ci.org/CS207-Feiyu-Group8/cs207-FinalProject.svg?branch=master)](https://travis-ci.org/CS207-Feiyu-Group8/cs207-FinalProject)
 [![Coverage Status](https://codecov.io/gh/CS207-Feiyu-Group8/cs207-FinalProject/branch/master/graph/badge.svg)](https://codecov.io/gh/CS207-Feiyu-Group8/cs207-FinalProject)
 
 ## To-Do List
