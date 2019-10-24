@@ -44,6 +44,24 @@ How do you envision that a user will interact with your package? What should the
 
 ## Software Organization
 
+```
+autodiff
+│   README.md
+│   .travis.yaml
+|   .gitignore	
+|   LICENCSE
+└─── implementation
+│   │   binary_tree.py
+│   │   forward_mode.py
+│   │   interface.py
+│   │   junk.py
+│   │   parse_expression.py
+│   │   parse_tree.py
+│   │   reverse_mode.py
+│   │   terms.py
+│   └─── test
+│       │   test.py
+```
 ### Prompt
 
 Discuss how you plan on organizing your software package.
@@ -138,14 +156,3 @@ methods:
 - operator module so that binary operators can be expressed as operator.xxxx(argument1, argument2)
 - pythonds.trees for access to BinaryTree class
 - pythonds.basic for access to Stack class in order to keep track of current node in binary tree
-
-
-
-
-
-
-
-
-
-
-
