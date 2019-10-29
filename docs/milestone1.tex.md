@@ -14,7 +14,7 @@
   - [2.1 Chain-Rule: The Core of Automatic Differentiation](#21-chain-rule-the-core-of-automatic-differentiation)
   - [2.2 Graph Structure of Calculations](#22-graph-structure-of-calculations)
   - [2.3 Dual Numbers](#23-dual-numbers)
-- [3. How to Use `Autodiff`](#3-how-to-use-autodiff)
+- [3. How to Use `autodiffy`](#3-how-to-use-autodiff)
 - [4. Software Organization](#4-software-organization)
   - [4.1 Directory Structure](#41-directory-structure)
   - [4.2 Software modules and basic functionality](#42-software-modules-and-basic-functionality)
@@ -32,7 +32,7 @@
 
 Differentiation forms the core of both traditional statistics methods such as Maximum-Likelihood Estimators, and leading edge methods in machine learning such as neural networks and sampling. A common problem in these fields is the need to take the gradient of an arbitrary function, which may not have a closed form analytical solution. 
 
-Our package, `Autodiff`, addresses this by providing forward-mode automatic differentiation. Written in Python, it evaluates both the value of a user-supplied function and its derivative at a given point.
+Our package, `autodiffy`, addresses this by providing forward-mode automatic differentiation. Written in Python, it evaluates both the value of a user-supplied function and its derivative at a given point.
 
 ### 1.1 What's a Derivative?
 
@@ -186,7 +186,7 @@ $$ g(x + x\varepsilon) = (x+1)^2 + (2x^2 + 2)\varepsilon $$
 
 We can see that the real part of this is the value of the function at the point $x$, and the dual part of this is the value of the derivative at the point $x$. We do not use dual numbers directly in our package, but in the same vein, we compute and return both the value of the derivative and the value of the function at a given point.
 
-## 3. How to Use `Autodiff`
+## 3. How to Use `autodiffy`
 
 This package will be primarily used by software developers and students looking to perform forward-mode differentiation on an expression at a given point. 
 
@@ -218,16 +218,15 @@ The input/output UI will be encapsulated in a `while` loop such that the user ca
 │   │   └─── ...
 │   ├───milestone1.md
 │   └───milestone1.tex.md
-├───implementation/
-│   ├───__init__.py
-│   ├───binary_tree.py
-│   ├───forward_mode.py
-│   ├───interface.py
-│   ├───junk.py
-│   ├───parse_expression.py
-│   ├───parse_tree.py
-│   ├───reverse_mode.py
-│   └───terms.py
+├───autodiffy/
+│   ├───compute/
+│   │   └─── ...
+│   ├───interface/
+│   │   └─── ...
+│   ├───parse/
+│   │   └─── ...
+│   └───tests/
+│       └─── ...
 ├───minutes/
 │   └─── ...
 ├───.pre-commit-config.yaml
@@ -262,9 +261,15 @@ The `minutes/` directory contains the minutes from our group meetings.
 
 ### 4.2 Software modules and basic functionality
 
-- Interface class: The GUI interface for our package 
+Our package has 4 main modules:
 
-- ForwardMode class: Takes in a scalar input and a function. Then computes the derivative of the function evaluated at the scalar input by using automatic differentiation. Stores the expression values and the derivatives
+- The `interface` module handles the way in which the user may use our package interactively; for example, through a GUI.
+
+- The `parse` module handles the way in which our package, whether used in a script or interactively, processes user input.
+
+- The `compute` module handles the calculations that are at the heart of our package.
+
+- The `tests` module contains tests for continuous integration and development.
 
 ### 4.3 Software test suite
 

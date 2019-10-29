@@ -1,6 +1,6 @@
 # Documentation \& Milestones
 
-This directory contains documentation for the `Autodiff` package and milestone submissions that are required by the CS207 course staff.
+This directory contains documentation for the `autodiffy` package and milestone submissions that are required by the CS207 course staff.
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
