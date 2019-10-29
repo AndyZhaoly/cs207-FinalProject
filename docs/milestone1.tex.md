@@ -125,9 +125,64 @@ In other words, if we can express a large, complex function as the nesting of sm
 
 ### 2.2 Graph Structure of Calculations
 
-This approach naturally lends itself to writing out a complex function as the composite of 
+This approach naturally lends itself to writing out a complex function as the composite of elementary functions, where each node represents a function and the directed edges represent the computations that connect the nodes. As we go from the inputs to the final function, we perform the computations to evaluate the value of the function and its derivative for a given value.
+
+This graph can be represented in a table form with the evaluation trace as well.
+
+**Worked Example**
+
+To illustrate how the graph structure works, we consider the following function
+
+$$ f(x, y) = x^2 + cos(5y) $$
+
+evaluated at $(x,\ y) = (2,\ 0)$.
+
+The evaluation trace looks like the following.
+
+| Trace   | Elementary Function      | Current Value           | Elementary Function Derivative       | $\nabla_{x}$ Value  | $\nabla_{y}$ Value  |
+| :---: | :-----------------: | :-----------: | :----------------------------: | :-----------------:  | :-----------------: |
+| $x_{1}$ | $x_{1}$ | $x$ | $\dot{x}_{1}$ | $1$ | $0$ |
+| $x_{2}$ | $x_{2}$ | $y$ | $\dot{x}_{2}$ | $0$ | $1$ |
+
+The evaluation trace can be visualized using the following graph.
 
 ### 2.3 Dual Numbers
+
+Dual numbers are a mathematical construct similar in structure to complex numbers. Dual numbers have a real and dual part, so we can write the dual number $f$ as
+
+$$ f = y + \varepsilon y' $$
+
+where $y$ is the real part and $y'$ is the dual part of the dual number. The number $\varepsilon$ is a constant with the special property that $\varepsilon^2 = 0$. Dual numbers have the following properties.
+
+- Conjugate: The conjugate of $f$, denoted $f^*$, is defined as
+
+$$ f^* = y - \varepsilon y' $$
+
+- Norm (or magnitude): The magnitude of $f$, denoted $|f|^2 = ff^*$, is defined as
+
+$$ |f|^2 = (y + \varepsilon y')(y - \varepsilon y') = y^2 $$
+
+- Polar form: The polar form of $f$ is written
+
+$$ f = y\left(1 + \frac{y'}{y}\varepsilon \right) $$
+
+Salient to the question of automatic differentiation, dual numbers can be used to compute the derivatives of arbitrary functions. Suppose we have an arbitrary function $g(x)$ that we want to take the derivative of. We can compute $g(y + \varepsilon y)$, and the real part of that computation corresponds to the value of the function at the point $y$, while the dual part of that computation corresponds to the value of the derivative of $g(x)$ at the point $y$.
+
+**Worked Example**
+
+We can take the example of $g(x) = (x+1)^2$. Since this is a simple function, we can take its derivative symbolically.
+
+$$ g'(x) = 2x + 2 $$
+
+Now we use dual numbers to reach the same conclusion.
+
+$$ g(x + x\varepsilon) = (x + x\varepsilon + 1)^2 = (x + x\varepsilon)^2 + 2(x + x\varepsilon) + 1 = x^2 + 2x^2\varepsilon + x^2\varepsilon^2 + 2x + 2x\varepsilon + 1 $$
+
+Now we use the property that $\varepsilon^2 = 0$ and collect the terms to get
+
+$$ g(x + x\varepsilon) = (x+1)^2 + (2x^2 + 2)\varepsilon $$
+
+We can see that the real part of this is the value of the function at the point $x$, and the dual part of this is the value of the derivative at the point $x$. We do not use dual numbers directly in our package, but in the same vein, we compute and return both the value of the derivative and the value of the function at a given point.
 
 ## How to Use `Autodiff`
 
