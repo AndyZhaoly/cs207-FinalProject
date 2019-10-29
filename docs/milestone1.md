@@ -54,7 +54,7 @@ Once phrased as an optimization problem, possibly subject to some constraints, a
 
 Take, for example, the standard Ordinary Least Squares (OLS) estimator for a linear regression model of the form 
 
-<p align="center"><img src="/docs/tex/c0bfae98689f9978243611c99749599c.svg?invert_in_darkmode&sanitize=true" align=middle width=98.30049735pt height=17.8466442pt/></p>
+<p align="center"><img src="/docs/tex/63dd9a690e5c37e8b42c89cf029e7b98.svg?invert_in_darkmode&sanitize=true" align=middle width=87.9449043pt height=14.611878599999999pt/></p>
 
 Suppose we want to find the estimate of <img src="/docs/tex/8217ed3c32a785f0b5aad4055f432ad8.svg?invert_in_darkmode&sanitize=true" align=middle width=10.16555099999999pt height=22.831056599999986pt/> denoted <img src="/docs/tex/2012e6a4e80d4d65bda472f3676c43ec.svg?invert_in_darkmode&sanitize=true" align=middle width=10.562281949999988pt height=31.50689519999998pt/> that minimizes the Mean-Squared-Error (MSE) defined as <img src="/docs/tex/38a2b05691db864dc889394f60469ec7.svg?invert_in_darkmode&sanitize=true" align=middle width=152.6500008pt height=27.6567522pt/>. We derive the First Order Conditions (FOCs) required to solve the optimization problem. Define
 
