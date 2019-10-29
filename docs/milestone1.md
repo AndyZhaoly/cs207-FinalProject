@@ -5,6 +5,11 @@
 **Table of Contents**
 
 - [Introduction](#introduction)
+  - [What's a Derivative?](#whats-a-derivative)
+  - [Why are Derivatives Important?](#why-are-derivatives-important)
+  - [Symbolic Differentiation](#symbolic-differentiation)
+  - [Finite Differences](#finite-differences)
+  - [Advantages of Auto-Differentiation](#advantages-of-auto-differentiation)
 - [Background](#background)
   - [Prompt](#prompt)
   - [Response](#response)
@@ -12,11 +17,15 @@
   - [Prompt](#prompt-1)
   - [Response](#response-1)
 - [Software Organization](#software-organization)
-  - [Prompt](#prompt-2)
-  - [Response](#response-2)
+  - [Directory Structure](#directory-structure)
+  - [Software modules and basic functionality](#software-modules-and-basic-functionality)
+  - [Software test suite](#software-test-suite)
+  - [Software Distribution](#software-distribution)
 - [Implementation](#implementation)
-  - [Prompt](#prompt-3)
-  - [Response](#response-3)
+  - [Overview of classes:](#overview-of-classes)
+    - [*ParseTree* class:](#parsetree-class)
+  - [*ForwardMode* class:](#forwardmode-class)
+  - [External dependencies:](#external-dependencies)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -38,27 +47,43 @@ We can also view the derivative as the effect of an infinitesimal change in the 
 
 Derivatives are useful in finding the maxima and minima of functions, and this has a variety of applications in statistics and machine learning.
 
-**Maximum Likelihood**
+**OLS \& Maximum Likelihood**
 
 In statistics, we are often interested in discovering the 'right values' for parameters that explain a relationship between a response variable and some predictors. This is often phrased in terms of an optimization problem: what is the value of parameters that maximize some objective function, or equivalently, minimize some loss function.
 
 Once phrased as an optimization problem, possibly subject to some constraints, a standard result from optimization suggests that we can examine the First-Order Condtions (FOCs) of the function by taking the derivative and setting that equal to zero in order to retrieve the optimal values.
 
-For example, in the standard Ordinary Least Squares (OLS) estimator for a linear regression model of the form 
+Take, for example, the standard Ordinary Least Squares (OLS) estimator for a linear regression model of the form 
 
-$$ Y = X'\beta + \varepsilon $$
+$$ Y = X^T\beta + \varepsilon $$
 
-We can 
+Suppose we want to find the estimate of $\beta$ denoted $\hat{\beta}$ that minimizes the Mean-Squared-Error (MSE) defined as $(Y-X\beta)^T(Y-X\beta)$. We derive the First Order Conditions (FOCs) required to solve the optimization problem. Define
 
-**Hamilton-Monte-Carlo Sampling**
+$$ f(b) = \frac{(Y-Xb)^T(Y-Xb)}{2} $$
 
+Since multiplication by a fixed scalar does not alter the result of an optimization problem, we can equivalently minimize $f(b)$. Then we have
 
+$$ \frac{\partial f(b)}{\partial b} = -(Y-Xb)^TX $$ 
+
+To find the MLE estimator $\hat{\beta}$, we set the FOC to zero.
+
+$$ -(Y-X\hat{\beta})'X = 0\ \therefore\ \hat{\beta} = (X^TX)^{-1}X^TY $$
+
+However, another approach to estimation, known as **maximum-likelihood**, uses a different objective function. The core of maximum likelihood is to ask what is the parameter value that makes the data we do observe likely to occur. That is, given the data that we have observe, what is the most likely value of the parameter we want to estimate. This likelihood that we seek to maximize is nothing more than the probability density function of the distribution that we have assumed underlies the model we are estimating. We can equivalently maximize the log of the likelihood, also known as the log-likelihood. Since this likelihood can be any probability density function, an analytical solution for its derivative may not exist.
+
+**Hamilton-Monte Carlo Sampling**
+
+In Bayesian statistical analysis, we are often interested in sampling from the posterior distribution of a parameter under some assumption on the priors. In particular, unless we have chosen conjugate priors, the posterior distribution we want to sample from can be arbitrarily complex, or even only known up to some scalar proportion.
+
+Under such circumstances, a popular sampling method to sample from an arbitrary distribution is known as **Hamilton-Monte Carlo**. Incorporating the notion of momentum from physics, it seeks to explore a wider space of possible values while still ensuring that the samples tend towards high-mass regions by making high-mass regions apply a 'gravity' of sorts on particles that are pushed off in random directions with random momentum.
+
+The core of Hamilton-Monte Carlo relies on being able to take arbitrary gradients of the log of the target distribution we want to sample from. However, since the target distribution may be arbitrarily complex, working out its derivative by hand is not always possible.
 
 ### Symbolic Differentiation
 
 For simple functions such as exponentials, trigonometric functions, multiplication, and addition, it is possible to derive an analytic formula for the derivative. For example, we know that the derivative of $f(x) = x^2$ is given by $f'(x) = 2x$. Since we have the analytic formula for the derivative, we can compute it to machine precision.
 
-However, this becomes harder to do when we want to take the derivative of, for example, functions defined in the computer science sense, algorithmically and employing flow control structures such as for loops. We can use expression trees, but these become unwieldy very quickly with increased function complexity.
+However, this becomes harder to do when we want to take the derivative of, for example, functions defined in the computer science sense, algorithmically and employing flow control structures such as for loops. We can use expression trees, but these become unwieldy very quickly with increased function complexity. Furthermore, there are times where an analytic expression of the function is simply not possible. The transition from OLS estimation to maximum-likelihood in statistics that we saw in the previous section illustrates this.
 
 Furthermore, it does not address the fundamental problem that taking the derivative of a function in this way is a highly bespoke problem. That is, every new function has to be worked through, and the process is highly artisanal, prone to human error.
 
@@ -79,11 +104,25 @@ However, the trade-off with using any finite differences method is that we lose 
 
 ## Background
 
-### Prompt
+### Chain-Rule: The Core of Automatic Differentiation
 
-Describe (briefly) the mathematical background and concepts as you see fit. You do not need to give a treatise on automatic differentation or dual numbers. Just give the essential ideas (e.g. the chain rule, the graph structure of calculations, elementary functions, etc). Do not copy and paste any of the lecture notes. We will easily be able to tell if you did this as it does not show that you truly understand the problem at hand.
+The chain rule is a standard calculus result that allows us to take the derivative of nested functions. We use the notation that
 
-### Response
+$$ f \circ g (x) = f(g(x))$$
+
+Suppose we have a function $g(x)$ that is nested in another function $f(\cdot)$, and we are interested in recovering the derivative of $f(\cdot)$ with respect to $x$. The chain rule states that
+
+$$\frac{df}{dx} = \frac{df}{dg} \frac{dg}{dx} = f'(g(x))g'(x) $$
+
+In other words, if we can express a large, complex function as the nesting of smaller operations with known derivatives, then we can compute the derivative of the function at a particular value for each stage of this nesting structure and recover the overall derivative. These 'smaller operations' are known as **elementary operations**, with known derivatives. Our package will implement the following elementary operations:
+
+- sin
+- cos
+- tan
+- log
+- log10
+- exp
+- sqrt
 
 ## How to Use <PACKAGE NAME>
 
@@ -184,7 +223,7 @@ methods:
 - *get_value* that retrieves evaluation of expression stored in *result* attribute
 - *get_derivative* that retrieves dictionary of partial derivatives stored in *result* attribute
 
-### *ForwardMode* class:
+#### *ForwardMode* class:
 
 attributes:
 
