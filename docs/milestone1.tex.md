@@ -4,17 +4,17 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**
 
-- [Introduction](#introduction)
-  - [What's a Derivative?](#whats-a-derivative)
-  - [Why are Derivatives Important?](#why-are-derivatives-important)
-  - [Symbolic Differentiation](#symbolic-differentiation)
-  - [Finite Differences](#finite-differences)
-  - [Advantages of Auto-Differentiation](#advantages-of-auto-differentiation)
-- [Background](#background)
-  - [Chain-Rule: The Core of Automatic Differentiation](#chain-rule-the-core-of-automatic-differentiation)
-- [How to Use <PACKAGE NAME>](#how-to-use-package-name)
-  - [Prompt](#prompt)
-  - [Response](#response)
+- [1 Introduction](#1-introduction)
+  - [1.1 What's a Derivative?](#11-whats-a-derivative)
+  - [1.2 Why are Derivatives Important?](#12-why-are-derivatives-important)
+  - [1.3 Symbolic Differentiation](#13-symbolic-differentiation)
+  - [1.4 Finite Differences](#14-finite-differences)
+  - [1.5 Advantages of Auto-Differentiation](#15-advantages-of-auto-differentiation)
+- [2 Background](#2-background)
+  - [2.1 Chain-Rule: The Core of Automatic Differentiation](#21-chain-rule-the-core-of-automatic-differentiation)
+  - [2.2 Graph Structure of Calculations](#22-graph-structure-of-calculations)
+  - [2.3 Dual Numbers](#23-dual-numbers)
+- [How to Use `Autodiff`](#how-to-use-autodiff)
 - [Software Organization](#software-organization)
   - [Directory Structure](#directory-structure)
   - [Software modules and basic functionality](#software-modules-and-basic-functionality)
@@ -28,13 +28,13 @@
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-## Introduction
+## 1 Introduction
 
 Differentiation forms the core of both traditional statistics methods such as Maximum-Likelihood Estimators, and leading edge methods in machine learning such as neural networks and sampling. A common problem in these fields is the need to take the gradient of an arbitrary function, which may not have a closed form analytical solution. 
 
 Our package, `Autodiff`, addresses this by providing forward-mode automatic differentiation. Written in Python, it evaluates both the value of a user-supplied function and its derivative at a given point.
 
-### What's a Derivative?
+### 1.1 What's a Derivative?
 
 In a single-variable sense, the derivative is the slope of the tangent line to the function at a given point. Formally, the derivative of a function, if it exists, is defined as
 
@@ -42,7 +42,7 @@ $$ f'(x) = \lim_{h\to0} \frac{f(a+h) - f(a)}{h} $$
 
 We can also view the derivative as the effect of an infinitesimal change in the value of $x$ on the value of the function $f(x)$. This definition extends to multi-variable function.
 
-### Why are Derivatives Important?
+### 1.2 Why are Derivatives Important?
 
 Derivatives are useful in finding the maxima and minima of functions, and this has a variety of applications in statistics and machine learning.
 
@@ -78,7 +78,7 @@ Under such circumstances, a popular sampling method to sample from an arbitrary 
 
 The core of Hamilton-Monte Carlo relies on being able to take arbitrary gradients of the log of the target distribution we want to sample from. However, since the target distribution may be arbitrarily complex, working out its derivative by hand is not always possible.
 
-### Symbolic Differentiation
+### 1.3 Symbolic Differentiation
 
 For simple functions such as exponentials, trigonometric functions, multiplication, and addition, it is possible to derive an analytic formula for the derivative. For example, we know that the derivative of $f(x) = x^2$ is given by $f'(x) = 2x$. Since we have the analytic formula for the derivative, we can compute it to machine precision.
 
@@ -86,7 +86,7 @@ However, this becomes harder to do when we want to take the derivative of, for e
 
 Furthermore, it does not address the fundamental problem that taking the derivative of a function in this way is a highly bespoke problem. That is, every new function has to be worked through, and the process is highly artisanal, prone to human error.
 
-### Finite Differences
+### 1.4 Finite Differences
 
 Given the way the derivative is defined, a natural approximation to the symbolic derivative where it does not exist in a closed-form analytical solution, or where it is difficult to work out, is to make a discrete analogue of the definition of the derivative. That is, choose some suitably small $h$, and approximate the derivative by computing
 
@@ -96,14 +96,14 @@ The advantage of such an approach is that it applies to any arbitrary function, 
 
 However, the trade-off with using any finite differences method is that we lose precision. That is, the accuracy of our approximation depends on choosing a small $h$, but there is a limit to how small a $h$ we can choose. Because the finite differences method relies on division, and division is an inherently expensive operation in terms of precision, we can only at best approximate the true derivative to several orders of magnitude lower than machine precision using the finite differences method.
 
-### Advantages of Auto-Differentiation
+### 1.5 Advantages of Auto-Differentiation
 
 - Computes derivatives to machine precision.
 - Does not rely on extensive mathematical derivations or expression trees, so it is easily applicable to a wide class of functions.
 
-## Background
+## 2 Background
 
-### Chain-Rule: The Core of Automatic Differentiation
+### 2.1 Chain-Rule: The Core of Automatic Differentiation
 
 The chain rule is a standard calculus result that allows us to take the derivative of nested functions. We use the notation that
 
@@ -123,11 +123,17 @@ In other words, if we can express a large, complex function as the nesting of sm
 - exp
 - sqrt
 
-## How to Use <PACKAGE NAME>
+### 2.2 Graph Structure of Calculations
+
+This approach naturally lends itself to writing out a complex function as the composite of 
+
+### 2.3 Dual Numbers
+
+## How to Use `Autodiff`
 
 This package will be primarily used by software developers and students looking to perform forward-mode differentiation on an expression at a given point. 
 
-The implementation will focus on the command line interface between the user and the program. To start, the user shall create and then activate a virtual environment with `conda create -n [EXAMPLE_ENVIRONMENT] python=3.7 anaconda` and `source activate [EXAMPLE_ENVIRONMENT]. 
+The implementation will focus on the command line interface between the user and the program. To start, the user shall create and then activate a virtual environment with `conda create -n [EXAMPLE_ENVIRONMENT] python=3.7 anaconda` and `source activate [EXAMPLE_ENVIRONMENT]`. 
 
 After the environment is created, the user can then install our package with conda or pip install. 
 
@@ -142,8 +148,6 @@ Lastly, after confirmation that the expression was interpreted by *ForwardMode* 
 *ForwardMode* then would calculate the value of the function and its derivative at the point values specificed by the user and output them in the terminal.
 
 The input/output UI will be encapsulated in a `while` loop such that the user can continue to define and evaluate more functions, or quit when done.
-
-### Response
 
 ## Software Organization
 
