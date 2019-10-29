@@ -28,7 +28,7 @@
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-## 1 Introduction
+## 1. Introduction
 
 Differentiation forms the core of both traditional statistics methods such as Maximum-Likelihood Estimators, and leading edge methods in machine learning such as neural networks and sampling. A common problem in these fields is the need to take the gradient of an arbitrary function, which may not have a closed form analytical solution. 
 
@@ -101,7 +101,7 @@ However, the trade-off with using any finite differences method is that we lose 
 - Computes derivatives to machine precision.
 - Does not rely on extensive mathematical derivations or expression trees, so it is easily applicable to a wide class of functions.
 
-## 2 Background
+## 2. Background
 
 ### 2.1 Chain-Rule: The Core of Automatic Differentiation
 
@@ -198,7 +198,7 @@ $$ g(x + x\varepsilon) = (x+1)^2 + (2x^2 + 2)\varepsilon $$
 
 We can see that the real part of this is the value of the function at the point $x$, and the dual part of this is the value of the derivative at the point $x$. We do not use dual numbers directly in our package, but in the same vein, we compute and return both the value of the derivative and the value of the function at a given point.
 
-## How to Use `Autodiff`
+## 3. How to Use `Autodiff`
 
 This package will be primarily used by software developers and students looking to perform forward-mode differentiation on an expression at a given point. 
 
@@ -218,9 +218,9 @@ Lastly, after confirmation that the expression was interpreted by *ForwardMode* 
 
 The input/output UI will be encapsulated in a `while` loop such that the user can continue to define and evaluate more functions, or quit when done.
 
-## Software Organization
+## 4. Software Organization
 
-### Directory Structure 
+### 4.1 Directory Structure 
 
 ```
 Autodiff
@@ -243,21 +243,21 @@ Autodiff
 │       │   test.py
 ```
 
-### Software modules and basic functionality
+### 4.2 Software modules and basic functionality
 
 - Interface class: The GUI interface for our package 
 
 - ForwardMode class: Takes in a scalar input and a function. Then computes the derivative of the function evaluated at the scalar input by using automatic differentiation. Stores the expression values and the derivatives
 
-### Software test suite
+### 4.3 Software test suite
 
 - The test suite will will be placed in the test directory. `Travis CI` will be used for continous integration testing. `Codecov` will be used for code coverage testing.
 
-### Software Distribution 
+### 4.4 Software Distribution 
 
 - Our package will be distributed on `PyPI`. 
 
-## Implementation
+## 5. Implementation
 
 1. Create a class called *ForwardMode* that keeps track of expression value and derivative(s) and updates these values as operations are applied to a *ForwardMode* object. The constructor takes in the value of the expression (e.g 2.0) and a dictionary that contains the partial derivatives of all the distinct variables in the expression (e.g. {x: 1, y: 0}) and sets this value and dictionary to be attributes. Then, a method will be created for each binary and unary operator that can be applied to a *ForwardMode* object. Unary methods include: *\_\_neg\_\_*, *sin*, *cos*, *tan*, *log*, *log10*, *exp* and *sqrt*. This means that when a *ForwardMode* object is passed into a numpy function such as np.sin, the *sin* method with be called instead of np.sin. All these methods will do two things: first, they'll update the value attribute of the *ForwardMode* object, and second they'll update the partial derivatives of the dictionary attribute. As a concrete example, the *sin* method will return a new *ForwardMode* object where the value is np.sin(self.value) and the partial derivative dictionary is *{variable: np.cos(self.value) \* derivative for variable, derivative in self.derivative_dict.items()}*. Meanwhile, binary methods include: *__add__*, *\_\_radd\_\_*, *\_\_sub\_\_*, *\_\_rsub\_\_*, *\_\_mul\_\_*, *\_\_rmul\_\_*, *\_\_truediv\_\_*, *\_\_rtruediv\_\_*, *\_\_pow\_\_* and *\_\_rpow\_\_*. For these methods, duck typing will be used to determine whether the other argument is a *ForwardMode* object or a numerical object (i.e. integer or float). As a concrete example, the *\_\_add\_\_* , method will first try to add the *value* attributes of the given *ForwardMode* object and the object passed in and will try to add their partial derivatives for each variable. However, if this results in an AttributeError (i.e. if the object passed in is not a *ForwardMode* object), then the value of the new *ForwardMode* object will be the *value* attribute of the given *ForwardMode* object plus the object passed in, and the dictionary of partial derivatives will remain the same. Because addition is a commutative operation, the *\_\_radd\_\_* method will simply return *self + argument*.
 
@@ -277,7 +277,7 @@ Autodiff
 	* if there is no right child (but there is a left child), then this means that the value stored at the given node is a unary operator. Evaluating this node amounts to applying the given unary operator to the *ForwardMode* object that results from recursively applying this function (*evaluate_tree*) to the left tree of the given node. 
 	* if there is both a right child and a left child, then this means that the value stored at the given note is a binary operator. Evaluating this node amounts to applying the given binary operator to the *ForwardMode* objects that result from recursively applying this function (*evaluate_tree*) to both the left tree and the right tree of the given node. 
 
-### Overview of classes:
+### 5.1 Overview of classes:
 
 #### *ParseTree* class:
 
@@ -322,7 +322,7 @@ methods:
 - *\_\_pow\_\_* 
 - *\_\_rpow\_\_*
 
-### External dependencies: 
+### 5.2 External dependencies: 
 - `numpy`
 - `operator` module so that binary operators can be expressed as operator.xxxx(argument1, argument2)
 - `pythonds.trees` for access to `BinaryTree` class
