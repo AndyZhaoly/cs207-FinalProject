@@ -4,27 +4,27 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**
 
-- [1 Introduction](#1-introduction)
+- [1. Introduction](#1-introduction)
   - [1.1 What's a Derivative?](#11-whats-a-derivative)
   - [1.2 Why are Derivatives Important?](#12-why-are-derivatives-important)
   - [1.3 Symbolic Differentiation](#13-symbolic-differentiation)
   - [1.4 Finite Differences](#14-finite-differences)
   - [1.5 Advantages of Auto-Differentiation](#15-advantages-of-auto-differentiation)
-- [2 Background](#2-background)
+- [2. Background](#2-background)
   - [2.1 Chain-Rule: The Core of Automatic Differentiation](#21-chain-rule-the-core-of-automatic-differentiation)
   - [2.2 Graph Structure of Calculations](#22-graph-structure-of-calculations)
   - [2.3 Dual Numbers](#23-dual-numbers)
-- [How to Use `Autodiff`](#how-to-use-autodiff)
-- [Software Organization](#software-organization)
-  - [Directory Structure](#directory-structure)
-  - [Software modules and basic functionality](#software-modules-and-basic-functionality)
-  - [Software test suite](#software-test-suite)
-  - [Software Distribution](#software-distribution)
-- [Implementation](#implementation)
-  - [Overview of classes:](#overview-of-classes)
+- [3. How to Use `Autodiff`](#3-how-to-use-autodiff)
+- [4. Software Organization](#4-software-organization)
+  - [4.1 Directory Structure](#41-directory-structure)
+  - [4.2 Software modules and basic functionality](#42-software-modules-and-basic-functionality)
+  - [4.3 Software test suite](#43-software-test-suite)
+  - [4.4 Software Distribution](#44-software-distribution)
+- [5. Implementation](#5-implementation)
+  - [5.1 Overview of classes:](#51-overview-of-classes)
     - [*ParseTree* class:](#parsetree-class)
     - [*ForwardMode* class:](#forwardmode-class)
-  - [External dependencies:](#external-dependencies)
+  - [5.2 External dependencies:](#52-external-dependencies)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
