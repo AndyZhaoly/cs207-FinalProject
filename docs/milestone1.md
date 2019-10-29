@@ -44,15 +44,18 @@ How do you envision that a user will interact with your package? What should the
 
 ## Software Organization
 
+- Directory Structure 
 ```
-autodiff
+Autodiff
 │   README.md
+|   LICENCSE.md
 │   .travis.yaml
+|   setup.py
 |   .gitignore	
-|   LICENCSE
-└─── implementation
-│   │   binary_tree.py
+└─── Autodiff
+│   │   __init__.py
 │   │   forward_mode.py
+│   │   binary_tree.py
 │   │   interface.py
 │   │   junk.py
 │   │   parse_expression.py
@@ -62,16 +65,15 @@ autodiff
 │   └─── test
 │       │   test.py
 ```
-### Prompt
+- Software modules and basic functionality
+    - Interface class: The GUI interface for our package 
+    - ForwardMode class: Takes in a scalar input and a function. Then computes the derivative of the function evaluated at the scalar input by using automatic differentiation. Stores the expression values and the derivatives
 
-Discuss how you plan on organizing your software package.
+- Software test suite
+    - The test suite will will be placed in the test directory. `Travis CI` will be used for continous integration testing. `Codecov` will be used for code coverage testing.
 
-- What will the directory structure look like?
-- What modules do you plan on including? What is their basic functionality?
-- Where will your test suite live? Will you use `TravisCI`? `CodeCov`?
-- How will you distribute your package (e.g. `PyPI`)?
-- How will you package your software? Will you use a framework? If so, which one and why? If not, why not?
-- Other considerations?
+- Software Distribution 
+    - Our package will be distributed on ``PyPI`. 
 
 ### Response
 
