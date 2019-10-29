@@ -22,7 +22,60 @@
 
 ## Introduction
 
-Describe the problem the software solves and why it's important to solve that problem.
+Differentiation forms the core of both traditional statistics methods such as Maximum-Likelihood Estimators, and leading edge methods in machine learning such as neural networks and sampling. A common problem in these fields is the need to take the gradient of an arbitrary function, which may not have a closed form analytical solution. 
+
+Our package, `Autodiff`, addresses this by providing forward-mode automatic differentiation. Written in Python, it evaluates both the value of a user-supplied function and its derivative at a given point.
+
+### What's a Derivative?
+
+In a single-variable sense, the derivative is the slope of the tangent line to the function at a given point. Formally, the derivative of a function, if it exists, is defined as
+
+$$ f'(x) = \lim_{h\to0} \frac{f(a+h) - f(a)}{h} $$
+
+We can also view the derivative as the effect of an infinitesimal change in the value of $x$ on the value of the function $f(x)$. This definition extends to multi-variable function.
+
+### Why are Derivatives Important?
+
+Derivatives are useful in finding the maxima and minima of functions, and this has a variety of applications in statistics and machine learning.
+
+**Maximum Likelihood**
+
+In statistics, we are often interested in discovering the 'right values' for parameters that explain a relationship between a response variable and some predictors. This is often phrased in terms of an optimization problem: what is the value of parameters that maximize some objective function, or equivalently, minimize some loss function.
+
+Once phrased as an optimization problem, possibly subject to some constraints, a standard result from optimization suggests that we can examine the First-Order Condtions (FOCs) of the function by taking the derivative and setting that equal to zero in order to retrieve the optimal values.
+
+For example, in the standard Ordinary Least Squares (OLS) estimator for a linear regression model of the form 
+
+$$ Y = X'\beta + \varepsilon $$
+
+We can 
+
+**Hamilton-Monte-Carlo Sampling**
+
+
+
+### Symbolic Differentiation
+
+For simple functions such as exponentials, trigonometric functions, multiplication, and addition, it is possible to derive an analytic formula for the derivative. For example, we know that the derivative of $f(x) = x^2$ is given by $f'(x) = 2x$. Since we have the analytic formula for the derivative, we can compute it to machine precision.
+
+However, this becomes harder to do when we want to take the derivative of, for example, functions defined in the computer science sense, algorithmically and employing flow control structures such as for loops. We can use expression trees, but these become unwieldy very quickly with increased function complexity.
+
+Furthermore, it does not address the fundamental problem that taking the derivative of a function in this way is a highly bespoke problem. That is, every new function has to be worked through, and the process is highly artisanal, prone to human error.
+
+### Finite Differences
+
+Given the way the derivative is defined, a natural approximation to the symbolic derivative where it does not exist in a closed-form analytical solution, or where it is difficult to work out, is to make a discrete analogue of the definition of the derivative. That is, choose some suitably small $h$, and approximate the derivative by computing
+
+$$ f'(x) = \frac{f(a+h) - f(a)}{h} $$
+
+The advantage of such an approach is that it applies to any arbitrary function, including functions in the 'computer science' sense defined possibly using for loops and other such constructions. It may also seem like a 'black-box' in the sense that it requires no artisanal derivations like symbolic differentiation does.
+
+However, the trade-off with using any finite differences method is that we lose precision. That is, the accuracy of our approximation depends on choosing a small $h$, but there is a limit to how small a $h$ we can choose. Because the finite differences method relies on division, and division is an inherently expensive operation in terms of precision, we can only at best approximate the true derivative to several orders of magnitude lower than machine precision using the finite differences method.
+
+### Advantages of Auto-Differentiation
+
+- Computes derivatives to machine precision.
+- Does not rely on extensive mathematical derivations or expression trees, so it is easily applicable to a wide class of functions.
 
 ## Background
 
@@ -56,7 +109,8 @@ The input/output UI will be encapsulated in a `while` loop such that the user ca
 
 ## Software Organization
 
-- Directory Structure 
+### Directory Structure 
+
 ```
 Autodiff
 │   README.md
@@ -77,32 +131,22 @@ Autodiff
 │   └─── test
 │       │   test.py
 ```
-- Software modules and basic functionality
-    - Interface class: The GUI interface for our package 
-    - ForwardMode class: Takes in a scalar input and a function. Then computes the derivative of the function evaluated at the scalar input by using automatic differentiation. Stores the expression values and the derivatives
 
-- Software test suite
-    - The test suite will will be placed in the test directory. `Travis CI` will be used for continous integration testing. `Codecov` will be used for code coverage testing.
+### Software modules and basic functionality
 
-- Software Distribution 
-    - Our package will be distributed on ``PyPI`. 
+- Interface class: The GUI interface for our package 
 
-### Response
+- ForwardMode class: Takes in a scalar input and a function. Then computes the derivative of the function evaluated at the scalar input by using automatic differentiation. Stores the expression values and the derivatives
+
+### Software test suite
+
+- The test suite will will be placed in the test directory. `Travis CI` will be used for continous integration testing. `Codecov` will be used for code coverage testing.
+
+### Software Distribution 
+
+- Our package will be distributed on `PyPI`. 
 
 ## Implementation
-
-### Prompt
-
-Discuss how you plan on implementing the forward mode of automatic differentiation.
-
-- What are the core data structures?
-- What classes will you implement?
-- What method and name attributes will your classes have?
-- What external dependencies will you rely on?
-- How will you deal with elementary functions like `sin`, `sqrt`, `log`, and `exp` (and all the others)?
-- Be sure to consider a variety of use cases. For example, don't limit your design to scalar functions of scalar values. Make sure you can handle the situations of vector functions of vectors and scalar functions of vectors. Don't forget that people will want to use your library in algorithms like Newton's method (among others).
-
-### Response
 
 1. Create a class called *ForwardMode* that keeps track of expression value and derivative(s) and updates these values as operations are applied to a *ForwardMode* object. The constructor takes in the value of the expression (e.g 2.0) and a dictionary that contains the partial derivatives of all the distinct variables in the expression (e.g. {x: 1, y: 0}) and sets this value and dictionary to be attributes. Then, a method will be created for each binary and unary operator that can be applied to a *ForwardMode* object. Unary methods include: *\_\_neg\_\_*, *sin*, *cos*, *tan*, *log*, *log10*, *exp* and *sqrt*. This means that when a *ForwardMode* object is passed into a numpy function such as np.sin, the *sin* method with be called instead of np.sin. All these methods will do two things: first, they'll update the value attribute of the *ForwardMode* object, and second they'll update the partial derivatives of the dictionary attribute. As a concrete example, the *sin* method will return a new *ForwardMode* object where the value is np.sin(self.value) and the partial derivative dictionary is *{variable: np.cos(self.value) \* derivative for variable, derivative in self.derivative_dict.items()}*. Meanwhile, binary methods include: *__add__*, *\_\_radd\_\_*, *\_\_sub\_\_*, *\_\_rsub\_\_*, *\_\_mul\_\_*, *\_\_rmul\_\_*, *\_\_truediv\_\_*, *\_\_rtruediv\_\_*, *\_\_pow\_\_* and *\_\_rpow\_\_*. For these methods, duck typing will be used to determine whether the other argument is a *ForwardMode* object or a numerical object (i.e. integer or float). As a concrete example, the *\_\_add\_\_* , method will first try to add the *value* attributes of the given *ForwardMode* object and the object passed in and will try to add their partial derivatives for each variable. However, if this results in an AttributeError (i.e. if the object passed in is not a *ForwardMode* object), then the value of the new *ForwardMode* object will be the *value* attribute of the given *ForwardMode* object plus the object passed in, and the dictionary of partial derivatives will remain the same. Because addition is a commutative operation, the *\_\_radd\_\_* method will simply return *self + argument*.
 
@@ -124,24 +168,26 @@ Discuss how you plan on implementing the forward mode of automatic differentiati
 
 ### Overview of classes:
 
-*ParseTree* class:
+#### *ParseTree* class:
 
 attributes: 
+
 - *expression* (in form of list created in step 1)
 - *variables* dictionary that maps all variables in expression to the value at which they are to be evaluated
 - *binary_tree* that is initially set to None but will later be replaced with the binary tree created in step 3. 
 - *result* that is initially set to None but will later be replaced with a ForwardMode object that contains the final value and all the partial derivatives 
 
 methods:
+
 - *build_parse_tree* that implements step 3 and sets binary_tree attribute to the resulting tree 
 - *implement_forward_mode* that implements step 4 and sets result attribute to the ForwardMode object outputted from the binary tree
 - *get_value* that retrieves evaluation of expression stored in *result* attribute
 - *get_derivative* that retrieves dictionary of partial derivatives stored in *result* attribute
 
-*ForwardMode* class:
-
+### *ForwardMode* class:
 
 attributes:
+
 - *value*
 - *derivative_dictionary*
 
@@ -166,7 +212,7 @@ methods:
 - *\_\_rpow\_\_*
 
 ### External dependencies: 
-- numpy
-- operator module so that binary operators can be expressed as operator.xxxx(argument1, argument2)
-- pythonds.trees for access to BinaryTree class
-- pythonds.basic for access to Stack class in order to keep track of current node in binary tree
+- `numpy`
+- `operator` module so that binary operators can be expressed as operator.xxxx(argument1, argument2)
+- `pythonds.trees` for access to `BinaryTree` class
+- `pythonds.basic` for access to `Stack` class in order to keep track of current node in binary tree
