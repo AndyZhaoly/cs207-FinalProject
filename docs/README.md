@@ -6,9 +6,8 @@ This directory contains documentation for the `Autodiff` package and milestone s
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**
 
-- [Documentation \& Milestones](#documentation-%5C-milestones)
-  - [Note for Graders](#note-for-graders)
-  - [Directory Structure](#directory-structure)
+- [Note for Graders](#note-for-graders)
+- [Directory Structure](#directory-structure)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
