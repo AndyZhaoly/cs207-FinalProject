@@ -133,18 +133,32 @@ This graph can be represented in a table form with the evaluation trace as well.
 
 To illustrate how the graph structure works, we consider the following function
 
-$$ f(x, y) = x^2 + cos(5y) $$
+$$ f(x, y) = x^2 + cos(2y) $$
 
-evaluated at $(x,\ y) = (2,\ 0)$.
+evaluated at $(x,\ y) = \left(2,\ \frac{\pi}{4}\right)$.
 
 The evaluation trace looks like the following.
 
 | Trace   | Elementary Function      | Current Value           | Elementary Function Derivative       | $\nabla_{x}$ Value  | $\nabla_{y}$ Value  |
 | :---: | :-----------------: | :-----------: | :----------------------------: | :-----------------:  | :-----------------: |
-| $x_{1}$ | $x_{1}$ | $x$ | $\dot{x}_{1}$ | $1$ | $0$ |
-| $x_{2}$ | $x_{2}$ | $y$ | $\dot{x}_{2}$ | $0$ | $1$ |
+| $x_{1}$ | $x_{1}$ | $2$ | $\dot{x}_{1}$ | $1$ | $0$ |
+| $x_{2}$ | $x_{2}$ | $\frac{\pi}{4}$ | $\dot{x}_{2}$ | $0$ | $1$ |
+| $x_{3}$ | $x_{1}^2$ | $4$ | $2\dot{x}_{1}x_1$ | $4$ | $0$ |
+| $x_{4}$ | $2x_{2}$ | $\frac{\pi}{2}$ | $2\dot{x}_{2}$ | $0$ | $2$ |
+| $x_{5}$ | $\cos(x_4)$ | $0$ | $-\sin(x_{4})\dot{x}_{4}$ | $0$ | $-2$ |
+| $x_{6}$ | $x_{3} + x_{5}$ | $4$ | $\dot{x}_{3} + \dot{x}_{5}$ | $4$ | $-2$ |
+
+Based on the evaluation trace above, when $(x,\ y) = \left(2,\ \frac{\pi}{4}\right)$, we have
+
+$$ f\left(2,\ \frac{\pi}{4}\right) = 4 $$
+
+$$ \frac{\partial f}{\partial x}\big|_{x=2, y=\frac{\pi}{4}} = 4 $$
+
+$$ \frac{\partial f}{\partial y}\big|_{x=2, y=\frac{\pi}{4}} = -2 $$
 
 The evaluation trace can be visualized using the following graph.
+
+![Computational Graph](./m1_image/bg_graph.png)
 
 ### 2.3 Dual Numbers
 
