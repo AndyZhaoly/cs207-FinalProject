@@ -231,6 +231,7 @@ The input/output UI will be encapsulated in a `while` loop such that the user ca
 │   ├───milestone1.md
 │   └───milestone1.tex.md
 ├───implementation/
+│   ├───__init__.py
 │   ├───binary_tree.py
 │   ├───forward_mode.py
 │   ├───interface.py
@@ -240,13 +241,18 @@ The input/output UI will be encapsulated in a `while` loop such that the user ca
 │   ├───reverse_mode.py
 │   └───terms.py
 ├───minutes/
-│   └───1017_oct17.md
+│   └─── ...
 ├───.pre-commit-config.yaml
 ├───.travis.yml
 ├───README.md
 ├───LICENSE
 └───requirements.txt
 ```
+
+**implementation/ Directory**
+
+The `implementation/` directory contains our code implementing forward mode differentiation. The modules and functionality implemented in our package are described in the next section.
+
 **Root Directory**
 
 The root of the repository contains the following:
@@ -260,8 +266,11 @@ The root of the repository contains the following:
 
 **docs/ Directory**
 
-The `docs/` directory contains documentation and milestones as required by 
+The `docs/` directory contains documentation and milestones as required by the CS207 course staff. More information can be found in the `README.md` in the folder.
 
+**minutes/ Directory**
+
+The `minutes/` directory contains the minutes from our group meetings.
 
 ### 4.2 Software modules and basic functionality
 
