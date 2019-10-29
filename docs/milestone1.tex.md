@@ -38,9 +38,9 @@ Our package, `Autodiff`, addresses this by providing forward-mode automatic diff
 
 In a single-variable sense, the derivative is the slope of the tangent line to the function at a given point. Formally, the derivative of a function, if it exists, is defined as
 
-<p align="center"><img src="/docs/tex/a857ea8a2fe45ee07000b0d58378138e.svg?invert_in_darkmode&sanitize=true" align=middle width=202.83071819999998pt height=34.7253258pt/></p>
+$$ f'(x) = \lim_{h\to0} \frac{f(a+h) - f(a)}{h} $$
 
-We can also view the derivative as the effect of an infinitesimal change in the value of <img src="/docs/tex/332cc365a4987aacce0ead01b8bdcc0b.svg?invert_in_darkmode&sanitize=true" align=middle width=9.39498779999999pt height=14.15524440000002pt/> on the value of the function <img src="/docs/tex/7997339883ac20f551e7f35efff0a2b9.svg?invert_in_darkmode&sanitize=true" align=middle width=31.99783454999999pt height=24.65753399999998pt/>. This definition extends to multi-variable function.
+We can also view the derivative as the effect of an infinitesimal change in the value of $x$ on the value of the function $f(x)$. This definition extends to multi-variable function.
 
 ### 1.2 Why are Derivatives Important?
 
@@ -54,19 +54,19 @@ Once phrased as an optimization problem, possibly subject to some constraints, a
 
 Take, for example, the standard Ordinary Least Squares (OLS) estimator for a linear regression model of the form 
 
-<p align="center"><img src="/docs/tex/c0bfae98689f9978243611c99749599c.svg?invert_in_darkmode&sanitize=true" align=middle width=98.30049735pt height=17.8466442pt/></p>
+$$ Y = X^T\beta + \varepsilon $$
 
-Suppose we want to find the estimate of <img src="/docs/tex/8217ed3c32a785f0b5aad4055f432ad8.svg?invert_in_darkmode&sanitize=true" align=middle width=10.16555099999999pt height=22.831056599999986pt/> denoted <img src="/docs/tex/2012e6a4e80d4d65bda472f3676c43ec.svg?invert_in_darkmode&sanitize=true" align=middle width=10.562281949999988pt height=31.50689519999998pt/> that minimizes the Mean-Squared-Error (MSE) defined as <img src="/docs/tex/38a2b05691db864dc889394f60469ec7.svg?invert_in_darkmode&sanitize=true" align=middle width=152.6500008pt height=27.6567522pt/>. We derive the First Order Conditions (FOCs) required to solve the optimization problem. Define
+Suppose we want to find the estimate of $\beta$ denoted $\hat{\beta}$ that minimizes the Mean-Squared-Error (MSE) defined as $(Y-X\beta)^T(Y-X\beta)$. We derive the First Order Conditions (FOCs) required to solve the optimization problem. Define
 
-<p align="center"><img src="/docs/tex/938b772ad7623e0429e67ba8dc0565fb.svg?invert_in_darkmode&sanitize=true" align=middle width=199.97639969999997pt height=36.22493325pt/></p>
+$$ f(b) = \frac{(Y-Xb)^T(Y-Xb)}{2} $$
 
-Since multiplication by a fixed scalar does not alter the result of an optimization problem, we can equivalently minimize <img src="/docs/tex/bc47eb54c896114e803bd8d0e087caf4.svg?invert_in_darkmode&sanitize=true" align=middle width=29.657642849999988pt height=24.65753399999998pt/>. Then we have
+Since multiplication by a fixed scalar does not alter the result of an optimization problem, we can equivalently minimize $f(b)$. Then we have
 
-<p align="center"><img src="/docs/tex/ad53178074765a454c30d20928549b19.svg?invert_in_darkmode&sanitize=true" align=middle width=169.2744306pt height=34.7253258pt/></p> 
+$$ \frac{\partial f(b)}{\partial b} = -(Y-Xb)^TX $$ 
 
-To find the MLE estimator <img src="/docs/tex/2012e6a4e80d4d65bda472f3676c43ec.svg?invert_in_darkmode&sanitize=true" align=middle width=10.562281949999988pt height=31.50689519999998pt/>, we set the FOC to zero.
+To find the MLE estimator $\hat{\beta}$, we set the FOC to zero.
 
-<p align="center"><img src="/docs/tex/2478ae13185ebecd3527433596f9e26a.svg?invert_in_darkmode&sanitize=true" align=middle width=305.7906324pt height=19.8630366pt/></p>
+$$ -(Y-X\hat{\beta})'X = 0\ \therefore\ \hat{\beta} = (X^TX)^{-1}X^TY $$
 
 However, another approach to estimation, known as **maximum-likelihood**, uses a different objective function. The core of maximum likelihood is to ask what is the parameter value that makes the data we do observe likely to occur. That is, given the data that we have observe, what is the most likely value of the parameter we want to estimate. This likelihood that we seek to maximize is nothing more than the probability density function of the distribution that we have assumed underlies the model we are estimating. We can equivalently maximize the log of the likelihood, also known as the log-likelihood. Since this likelihood can be any probability density function, an analytical solution for its derivative may not exist.
 
@@ -80,7 +80,7 @@ The core of Hamilton-Monte Carlo relies on being able to take arbitrary gradient
 
 ### 1.3 Symbolic Differentiation
 
-For simple functions such as exponentials, trigonometric functions, multiplication, and addition, it is possible to derive an analytic formula for the derivative. For example, we know that the derivative of <img src="/docs/tex/45d56c128bbdcd4414f84c155351f718.svg?invert_in_darkmode&sanitize=true" align=middle width=69.86299979999998pt height=26.76175259999998pt/> is given by <img src="/docs/tex/e2a1ce28d745dcfcc333b8e15e44dfa1.svg?invert_in_darkmode&sanitize=true" align=middle width=76.14153689999998pt height=24.7161288pt/>. Since we have the analytic formula for the derivative, we can compute it to machine precision.
+For simple functions such as exponentials, trigonometric functions, multiplication, and addition, it is possible to derive an analytic formula for the derivative. For example, we know that the derivative of $f(x) = x^2$ is given by $f'(x) = 2x$. Since we have the analytic formula for the derivative, we can compute it to machine precision.
 
 However, this becomes harder to do when we want to take the derivative of, for example, functions defined in the computer science sense, algorithmically and employing flow control structures such as for loops. We can use expression trees, but these become unwieldy very quickly with increased function complexity. Furthermore, there are times where an analytic expression of the function is simply not possible. The transition from OLS estimation to maximum-likelihood in statistics that we saw in the previous section illustrates this.
 
@@ -88,13 +88,13 @@ Furthermore, it does not address the fundamental problem that taking the derivat
 
 ### 1.4 Finite Differences
 
-Given the way the derivative is defined, a natural approximation to the symbolic derivative where it does not exist in a closed-form analytical solution, or where it is difficult to work out, is to make a discrete analogue of the definition of the derivative. That is, choose some suitably small <img src="/docs/tex/2ad9d098b937e46f9f58968551adac57.svg?invert_in_darkmode&sanitize=true" align=middle width=9.47111549999999pt height=22.831056599999986pt/>, and approximate the derivative by computing
+Given the way the derivative is defined, a natural approximation to the symbolic derivative where it does not exist in a closed-form analytical solution, or where it is difficult to work out, is to make a discrete analogue of the definition of the derivative. That is, choose some suitably small $h$, and approximate the derivative by computing
 
-<p align="center"><img src="/docs/tex/b8378ec9689c31b225253b69936ef4b4.svg?invert_in_darkmode&sanitize=true" align=middle width=172.73743575pt height=34.7253258pt/></p>
+$$ f'(x) = \frac{f(a+h) - f(a)}{h} $$
 
 The advantage of such an approach is that it applies to any arbitrary function, including functions in the 'computer science' sense defined possibly using for loops and other such constructions. It may also seem like a 'black-box' in the sense that it requires no artisanal derivations like symbolic differentiation does.
 
-However, the trade-off with using any finite differences method is that we lose precision. That is, the accuracy of our approximation depends on choosing a small <img src="/docs/tex/2ad9d098b937e46f9f58968551adac57.svg?invert_in_darkmode&sanitize=true" align=middle width=9.47111549999999pt height=22.831056599999986pt/>, but there is a limit to how small a <img src="/docs/tex/2ad9d098b937e46f9f58968551adac57.svg?invert_in_darkmode&sanitize=true" align=middle width=9.47111549999999pt height=22.831056599999986pt/> we can choose. Because the finite differences method relies on division, and division is an inherently expensive operation in terms of precision, we can only at best approximate the true derivative to several orders of magnitude lower than machine precision using the finite differences method.
+However, the trade-off with using any finite differences method is that we lose precision. That is, the accuracy of our approximation depends on choosing a small $h$, but there is a limit to how small a $h$ we can choose. Because the finite differences method relies on division, and division is an inherently expensive operation in terms of precision, we can only at best approximate the true derivative to several orders of magnitude lower than machine precision using the finite differences method.
 
 ### 1.5 Advantages of Auto-Differentiation
 
@@ -107,11 +107,11 @@ However, the trade-off with using any finite differences method is that we lose 
 
 The chain rule is a standard calculus result that allows us to take the derivative of nested functions. We use the notation that
 
-<p align="center"><img src="/docs/tex/ca150cb4590264063d7f2ffeb7c7955f.svg?invert_in_darkmode&sanitize=true" align=middle width=131.08441499999998pt height=16.438356pt/></p>
+$$ f \circ g (x) = f(g(x))$$
 
-Suppose we have a function <img src="/docs/tex/ffcbbb391bc04da2d07f7aef493d3e2a.svg?invert_in_darkmode&sanitize=true" align=middle width=30.61077854999999pt height=24.65753399999998pt/> that is nested in another function <img src="/docs/tex/8824595f458085fe3bf467c4228300fc.svg?invert_in_darkmode&sanitize=true" align=middle width=27.169069949999987pt height=24.65753399999998pt/>, and we are interested in recovering the derivative of <img src="/docs/tex/8824595f458085fe3bf467c4228300fc.svg?invert_in_darkmode&sanitize=true" align=middle width=27.169069949999987pt height=24.65753399999998pt/> with respect to <img src="/docs/tex/332cc365a4987aacce0ead01b8bdcc0b.svg?invert_in_darkmode&sanitize=true" align=middle width=9.39498779999999pt height=14.15524440000002pt/>. The chain rule states that
+Suppose we have a function $g(x)$ that is nested in another function $f(\cdot)$, and we are interested in recovering the derivative of $f(\cdot)$ with respect to $x$. The chain rule states that
 
-<p align="center"><img src="/docs/tex/650bfcf42b304968dea6349d1635ed35.svg?invert_in_darkmode&sanitize=true" align=middle width=199.6345131pt height=37.0084374pt/></p>
+$$\frac{df}{dx} = \frac{df}{dg} \frac{dg}{dx} = f'(g(x))g'(x) $$
 
 In other words, if we can express a large, complex function as the nesting of smaller operations with known derivatives, then we can compute the derivative of the function at a particular value for each stage of this nesting structure and recover the overall derivative. These 'smaller operations' are known as **elementary operations**, with known derivatives. Our package will implement the following elementary operations:
 
@@ -133,28 +133,28 @@ This graph can be represented in a table form with the evaluation trace as well.
 
 To illustrate how the graph structure works, we consider the following function
 
-<p align="center"><img src="/docs/tex/d1a55cfc46629cc52752a4c88293812a.svg?invert_in_darkmode&sanitize=true" align=middle width=159.17237655pt height=18.312383099999998pt/></p>
+$$ f(x, y) = x^2 + cos(2y) $$
 
-evaluated at <img src="/docs/tex/a635d6f213f21ac52da2e25938d9c156.svg?invert_in_darkmode&sanitize=true" align=middle width=113.65085324999997pt height=27.94539330000001pt/>.
+evaluated at $(x,\ y) = \left(2,\ \frac{\pi}{4}\right)$.
 
 The evaluation trace looks like the following.
 
-| Trace   | Elementary Function      | Current Value           | Elementary Function Derivative       | <img src="/docs/tex/644271f822c0a2a59907b3c936120ed7.svg?invert_in_darkmode&sanitize=true" align=middle width=21.153044549999994pt height=22.465723500000017pt/> Value  | <img src="/docs/tex/120888ade278ad9af7bffb67ec5c439f.svg?invert_in_darkmode&sanitize=true" align=middle width=20.77827839999999pt height=22.465723500000017pt/> Value  |
+| Trace   | Elementary Function      | Current Value           | Elementary Function Derivative       | $\nabla_{x}$ Value  | $\nabla_{y}$ Value  |
 | :---: | :-----------------: | :-----------: | :----------------------------: | :-----------------:  | :-----------------: |
-| <img src="/docs/tex/7e0dded6496a3ed3f3c0db74604087ac.svg?invert_in_darkmode&sanitize=true" align=middle width=15.94753544999999pt height=14.15524440000002pt/> | <img src="/docs/tex/7e0dded6496a3ed3f3c0db74604087ac.svg?invert_in_darkmode&sanitize=true" align=middle width=15.94753544999999pt height=14.15524440000002pt/> | <img src="/docs/tex/76c5792347bb90ef71cfbace628572cf.svg?invert_in_darkmode&sanitize=true" align=middle width=8.219209349999991pt height=21.18721440000001pt/> | <img src="/docs/tex/74370f5631ffcc0d659be47a6e26ea60.svg?invert_in_darkmode&sanitize=true" align=middle width=15.94753544999999pt height=21.95701200000001pt/> | <img src="/docs/tex/034d0a6be0424bffe9a6e7ac9236c0f5.svg?invert_in_darkmode&sanitize=true" align=middle width=8.219209349999991pt height=21.18721440000001pt/> | <img src="/docs/tex/29632a9bf827ce0200454dd32fc3be82.svg?invert_in_darkmode&sanitize=true" align=middle width=8.219209349999991pt height=21.18721440000001pt/> |
-| <img src="/docs/tex/345508ce4e933b712fe803f442f74d63.svg?invert_in_darkmode&sanitize=true" align=middle width=15.94753544999999pt height=14.15524440000002pt/> | <img src="/docs/tex/345508ce4e933b712fe803f442f74d63.svg?invert_in_darkmode&sanitize=true" align=middle width=15.94753544999999pt height=14.15524440000002pt/> | <img src="/docs/tex/4eb105c60f67ef131323b9c0969450b8.svg?invert_in_darkmode&sanitize=true" align=middle width=8.099960549999997pt height=22.853275500000024pt/> | <img src="/docs/tex/017c3766de1bf45f78530c90083b6d31.svg?invert_in_darkmode&sanitize=true" align=middle width=15.94753544999999pt height=21.95701200000001pt/> | <img src="/docs/tex/29632a9bf827ce0200454dd32fc3be82.svg?invert_in_darkmode&sanitize=true" align=middle width=8.219209349999991pt height=21.18721440000001pt/> | <img src="/docs/tex/034d0a6be0424bffe9a6e7ac9236c0f5.svg?invert_in_darkmode&sanitize=true" align=middle width=8.219209349999991pt height=21.18721440000001pt/> |
-| <img src="/docs/tex/0c2e0f3c3c97f7a8819ced883e72c6a6.svg?invert_in_darkmode&sanitize=true" align=middle width=15.94753544999999pt height=14.15524440000002pt/> | <img src="/docs/tex/fa874e46af4d176274d7c013050639f0.svg?invert_in_darkmode&sanitize=true" align=middle width=15.94753544999999pt height=26.76175259999998pt/> | <img src="/docs/tex/ecf4fe2774fd9244b4fd56f7e76dc882.svg?invert_in_darkmode&sanitize=true" align=middle width=8.219209349999991pt height=21.18721440000001pt/> | <img src="/docs/tex/710ff052e0d410414878fc4898bcfb2b.svg?invert_in_darkmode&sanitize=true" align=middle width=40.93616999999999pt height=21.95701200000001pt/> | <img src="/docs/tex/ecf4fe2774fd9244b4fd56f7e76dc882.svg?invert_in_darkmode&sanitize=true" align=middle width=8.219209349999991pt height=21.18721440000001pt/> | <img src="/docs/tex/29632a9bf827ce0200454dd32fc3be82.svg?invert_in_darkmode&sanitize=true" align=middle width=8.219209349999991pt height=21.18721440000001pt/> |
-| <img src="/docs/tex/7dabc4eaf45b5547de66d633c8335c2f.svg?invert_in_darkmode&sanitize=true" align=middle width=15.94753544999999pt height=14.15524440000002pt/> | <img src="/docs/tex/2e55604b5e6e1a07e5e5236207a207e5.svg?invert_in_darkmode&sanitize=true" align=middle width=24.16674479999999pt height=21.18721440000001pt/> | <img src="/docs/tex/06798cd2c8dafc8ea4b2e78028094f67.svg?invert_in_darkmode&sanitize=true" align=middle width=8.099960549999997pt height=22.853275500000024pt/> | <img src="/docs/tex/69d49f642354e61ca119b76fa58df9a4.svg?invert_in_darkmode&sanitize=true" align=middle width=24.16674479999999pt height=21.95701200000001pt/> | <img src="/docs/tex/29632a9bf827ce0200454dd32fc3be82.svg?invert_in_darkmode&sanitize=true" align=middle width=8.219209349999991pt height=21.18721440000001pt/> | <img src="/docs/tex/76c5792347bb90ef71cfbace628572cf.svg?invert_in_darkmode&sanitize=true" align=middle width=8.219209349999991pt height=21.18721440000001pt/> |
-| <img src="/docs/tex/84cb3de83fdfb7f77afb904200ae726b.svg?invert_in_darkmode&sanitize=true" align=middle width=15.94753544999999pt height=14.15524440000002pt/> | <img src="/docs/tex/2078c05d3eaa9257c0217fa28ee90615.svg?invert_in_darkmode&sanitize=true" align=middle width=51.56403284999998pt height=24.65753399999998pt/> | <img src="/docs/tex/29632a9bf827ce0200454dd32fc3be82.svg?invert_in_darkmode&sanitize=true" align=middle width=8.219209349999991pt height=21.18721440000001pt/> | <img src="/docs/tex/d71d062df2f736ed0da0740c66445de4.svg?invert_in_darkmode&sanitize=true" align=middle width=81.21019664999999pt height=24.65753399999998pt/> | <img src="/docs/tex/29632a9bf827ce0200454dd32fc3be82.svg?invert_in_darkmode&sanitize=true" align=middle width=8.219209349999991pt height=21.18721440000001pt/> | <img src="/docs/tex/f956e4ba3abf630e9642346ed4f9706b.svg?invert_in_darkmode&sanitize=true" align=middle width=21.00464354999999pt height=21.18721440000001pt/> |
-| <img src="/docs/tex/8b613d40166f51cc1dcd283bfebd2bdc.svg?invert_in_darkmode&sanitize=true" align=middle width=15.94753544999999pt height=14.15524440000002pt/> | <img src="/docs/tex/70346ceb4309e739898f0b27fe9d9f39.svg?invert_in_darkmode&sanitize=true" align=middle width=52.808174099999995pt height=19.1781018pt/> | <img src="/docs/tex/ecf4fe2774fd9244b4fd56f7e76dc882.svg?invert_in_darkmode&sanitize=true" align=middle width=8.219209349999991pt height=21.18721440000001pt/> | <img src="/docs/tex/52e91f6b0cecb6d7fd1cd16ea557d31f.svg?invert_in_darkmode&sanitize=true" align=middle width=52.80815264999999pt height=21.95701200000001pt/> | <img src="/docs/tex/ecf4fe2774fd9244b4fd56f7e76dc882.svg?invert_in_darkmode&sanitize=true" align=middle width=8.219209349999991pt height=21.18721440000001pt/> | <img src="/docs/tex/f956e4ba3abf630e9642346ed4f9706b.svg?invert_in_darkmode&sanitize=true" align=middle width=21.00464354999999pt height=21.18721440000001pt/> |
+| $x_{1}$ | $x_{1}$ | $2$ | $\dot{x}_{1}$ | $1$ | $0$ |
+| $x_{2}$ | $x_{2}$ | $\frac{\pi}{4}$ | $\dot{x}_{2}$ | $0$ | $1$ |
+| $x_{3}$ | $x_{1}^2$ | $4$ | $2\dot{x}_{1}x_1$ | $4$ | $0$ |
+| $x_{4}$ | $2x_{2}$ | $\frac{\pi}{2}$ | $2\dot{x}_{2}$ | $0$ | $2$ |
+| $x_{5}$ | $\cos(x_4)$ | $0$ | $-\sin(x_{4})\dot{x}_{4}$ | $0$ | $-2$ |
+| $x_{6}$ | $x_{3} + x_{5}$ | $4$ | $\dot{x}_{3} + \dot{x}_{5}$ | $4$ | $-2$ |
 
-Based on the evaluation trace above, when <img src="/docs/tex/a635d6f213f21ac52da2e25938d9c156.svg?invert_in_darkmode&sanitize=true" align=middle width=113.65085324999997pt height=27.94539330000001pt/>, we have
+Based on the evaluation trace above, when $(x,\ y) = \left(2,\ \frac{\pi}{4}\right)$, we have
 
-<p align="center"><img src="/docs/tex/fc4db459ddfc4a8bb79e0b61cde67188.svg?invert_in_darkmode&sanitize=true" align=middle width=97.23844844999999pt height=30.1801401pt/></p>
+$$ f\left(2,\ \frac{\pi}{4}\right) = 4 $$
 
-<p align="center"><img src="/docs/tex/dbc32f4fdfc67fc35fe3b84617246453.svg?invert_in_darkmode&sanitize=true" align=middle width=114.1133466pt height=33.81208709999999pt/></p>
+$$ \frac{\partial f}{\partial x}\big|_{x=2, y=\frac{\pi}{4}} = 4 $$
 
-<p align="center"><img src="/docs/tex/5e737eb4e276f445dfe3303bde8cd911.svg?invert_in_darkmode&sanitize=true" align=middle width=126.89878079999998pt height=37.0084374pt/></p>
+$$ \frac{\partial f}{\partial y}\big|_{x=2, y=\frac{\pi}{4}} = -2 $$
 
 The evaluation trace can be visualized using the following graph.
 
@@ -162,41 +162,41 @@ The evaluation trace can be visualized using the following graph.
 
 ### 2.3 Dual Numbers
 
-Dual numbers are a mathematical construct similar in structure to complex numbers. Dual numbers have a real and dual part, so we can write the dual number <img src="/docs/tex/190083ef7a1625fbc75f243cffb9c96d.svg?invert_in_darkmode&sanitize=true" align=middle width=9.81741584999999pt height=22.831056599999986pt/> as
+Dual numbers are a mathematical construct similar in structure to complex numbers. Dual numbers have a real and dual part, so we can write the dual number $f$ as
 
-<p align="center"><img src="/docs/tex/007073b6000030cd13e94e70f3194bb8.svg?invert_in_darkmode&sanitize=true" align=middle width=80.5801128pt height=16.3763325pt/></p>
+$$ f = y + \varepsilon y' $$
 
-where <img src="/docs/tex/deceeaf6940a8c7a5a02373728002b0f.svg?invert_in_darkmode&sanitize=true" align=middle width=8.649225749999989pt height=14.15524440000002pt/> is the real part and <img src="/docs/tex/15f93b25ba881e5829e8fc647b680fb2.svg?invert_in_darkmode&sanitize=true" align=middle width=12.43916849999999pt height=24.7161288pt/> is the dual part of the dual number. The number <img src="/docs/tex/9ae7733dac2b7b4470696ed36239b676.svg?invert_in_darkmode&sanitize=true" align=middle width=7.66550399999999pt height=14.15524440000002pt/> is a constant with the special property that <img src="/docs/tex/ad6370c8c8de22b67ebb85cbc747ef57.svg?invert_in_darkmode&sanitize=true" align=middle width=45.17680365pt height=26.76175259999998pt/>. Dual numbers have the following properties.
+where $y$ is the real part and $y'$ is the dual part of the dual number. The number $\varepsilon$ is a constant with the special property that $\varepsilon^2 = 0$. Dual numbers have the following properties.
 
-- Conjugate: The conjugate of <img src="/docs/tex/190083ef7a1625fbc75f243cffb9c96d.svg?invert_in_darkmode&sanitize=true" align=middle width=9.81741584999999pt height=22.831056599999986pt/>, denoted <img src="/docs/tex/baa7cc2f36af87229745595791fda227.svg?invert_in_darkmode&sanitize=true" align=middle width=16.55260694999999pt height=22.831056599999986pt/>, is defined as
+- Conjugate: The conjugate of $f$, denoted $f^*$, is defined as
 
-<p align="center"><img src="/docs/tex/42e4c24bdc5ef2d675290bbcd9ab906f.svg?invert_in_darkmode&sanitize=true" align=middle width=88.1372019pt height=16.3763325pt/></p>
+$$ f^* = y - \varepsilon y' $$
 
-- Norm (or magnitude): The magnitude of <img src="/docs/tex/190083ef7a1625fbc75f243cffb9c96d.svg?invert_in_darkmode&sanitize=true" align=middle width=9.81741584999999pt height=22.831056599999986pt/>, denoted <img src="/docs/tex/96131d32ec473dc893b70065aa499ba2.svg?invert_in_darkmode&sanitize=true" align=middle width=74.61197204999999pt height=26.76175259999998pt/>, is defined as
+- Norm (or magnitude): The magnitude of $f$, denoted $|f|^2 = ff^*$, is defined as
 
-<p align="center"><img src="/docs/tex/ac18a53f1fa3d1c7256381bdc9e26368.svg?invert_in_darkmode&sanitize=true" align=middle width=210.26616599999997pt height=18.312383099999998pt/></p>
+$$ |f|^2 = (y + \varepsilon y')(y - \varepsilon y') = y^2 $$
 
-- Polar form: The polar form of <img src="/docs/tex/190083ef7a1625fbc75f243cffb9c96d.svg?invert_in_darkmode&sanitize=true" align=middle width=9.81741584999999pt height=22.831056599999986pt/> is written
+- Polar form: The polar form of $f$ is written
 
-<p align="center"><img src="/docs/tex/e0b801a17494cdbf8215e5075a7e5141.svg?invert_in_darkmode&sanitize=true" align=middle width=120.50710815pt height=39.452455349999994pt/></p>
+$$ f = y\left(1 + \frac{y'}{y}\varepsilon \right) $$
 
-Salient to the question of automatic differentiation, dual numbers can be used to compute the derivatives of arbitrary functions. Suppose we have an arbitrary function <img src="/docs/tex/ffcbbb391bc04da2d07f7aef493d3e2a.svg?invert_in_darkmode&sanitize=true" align=middle width=30.61077854999999pt height=24.65753399999998pt/> that we want to take the derivative of. We can compute <img src="/docs/tex/92f07220eff922f7e9b89e3eb33b73ab.svg?invert_in_darkmode&sanitize=true" align=middle width=66.27089864999998pt height=24.65753399999998pt/>, and the real part of that computation corresponds to the value of the function at the point <img src="/docs/tex/deceeaf6940a8c7a5a02373728002b0f.svg?invert_in_darkmode&sanitize=true" align=middle width=8.649225749999989pt height=14.15524440000002pt/>, while the dual part of that computation corresponds to the value of the derivative of <img src="/docs/tex/ffcbbb391bc04da2d07f7aef493d3e2a.svg?invert_in_darkmode&sanitize=true" align=middle width=30.61077854999999pt height=24.65753399999998pt/> at the point <img src="/docs/tex/deceeaf6940a8c7a5a02373728002b0f.svg?invert_in_darkmode&sanitize=true" align=middle width=8.649225749999989pt height=14.15524440000002pt/>.
+Salient to the question of automatic differentiation, dual numbers can be used to compute the derivatives of arbitrary functions. Suppose we have an arbitrary function $g(x)$ that we want to take the derivative of. We can compute $g(y + \varepsilon y)$, and the real part of that computation corresponds to the value of the function at the point $y$, while the dual part of that computation corresponds to the value of the derivative of $g(x)$ at the point $y$.
 
 **Worked Example**
 
-We can take the example of <img src="/docs/tex/03b0f6bb834ba1e41336128850fd7ab4.svg?invert_in_darkmode&sanitize=true" align=middle width=109.57177769999997pt height=26.76175259999998pt/>. Since this is a simple function, we can take its derivative symbolically.
+We can take the example of $g(x) = (x+1)^2$. Since this is a simple function, we can take its derivative symbolically.
 
-<p align="center"><img src="/docs/tex/da33f5fecc039c01d21a403ac08f810a.svg?invert_in_darkmode&sanitize=true" align=middle width=103.06488225pt height=17.2895712pt/></p>
+$$ g'(x) = 2x + 2 $$
 
 Now we use dual numbers to reach the same conclusion.
 
-<p align="center"><img src="/docs/tex/af76f82cc2530bcfec53c78bbf508f83.svg?invert_in_darkmode&sanitize=true" align=middle width=643.9938697499999pt height=18.312383099999998pt/></p>
+$$ g(x + x\varepsilon) = (x + x\varepsilon + 1)^2 = (x + x\varepsilon)^2 + 2(x + x\varepsilon) + 1 = x^2 + 2x^2\varepsilon + x^2\varepsilon^2 + 2x + 2x\varepsilon + 1 $$
 
-Now we use the property that <img src="/docs/tex/ad6370c8c8de22b67ebb85cbc747ef57.svg?invert_in_darkmode&sanitize=true" align=middle width=45.17680365pt height=26.76175259999998pt/> and collect the terms to get
+Now we use the property that $\varepsilon^2 = 0$ and collect the terms to get
 
-<p align="center"><img src="/docs/tex/22608f3efa3aeef755dd32728ac5e632.svg?invert_in_darkmode&sanitize=true" align=middle width=241.38656024999997pt height=18.312383099999998pt/></p>
+$$ g(x + x\varepsilon) = (x+1)^2 + (2x^2 + 2)\varepsilon $$
 
-We can see that the real part of this is the value of the function at the point <img src="/docs/tex/332cc365a4987aacce0ead01b8bdcc0b.svg?invert_in_darkmode&sanitize=true" align=middle width=9.39498779999999pt height=14.15524440000002pt/>, and the dual part of this is the value of the derivative at the point <img src="/docs/tex/332cc365a4987aacce0ead01b8bdcc0b.svg?invert_in_darkmode&sanitize=true" align=middle width=9.39498779999999pt height=14.15524440000002pt/>. We do not use dual numbers directly in our package, but in the same vein, we compute and return both the value of the derivative and the value of the function at a given point.
+We can see that the real part of this is the value of the function at the point $x$, and the dual part of this is the value of the derivative at the point $x$. We do not use dual numbers directly in our package, but in the same vein, we compute and return both the value of the derivative and the value of the function at a given point.
 
 ## 3. How to Use `Autodiff`
 
