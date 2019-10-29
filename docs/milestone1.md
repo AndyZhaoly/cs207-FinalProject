@@ -34,11 +34,23 @@ Describe (briefly) the mathematical background and concepts as you see fit. You 
 
 ## How to Use <PACKAGE NAME>
 
-### Prompt
+This package will be primarily used by software developers and students looking to perform forward-mode differentiation on an expression at a given point. 
 
-How do you envision that a user will interact with your package? What should they import? How can they instantiate AD objects?
+The implementation will focus on the command line interface between the user and the program. To start, the user shall create and then activate a virtual environment with `conda create -n [EXAMPLE_ENVIRONMENT] python=3.7 anaconda` and `source activate [EXAMPLE_ENVIRONMENT]. 
 
-**Note: This section should be a mix of pseudo code and text.** It should not include any actual operations yet. Remember, you have not yet written any code at this point.
+After the environment is created, the user can then install our package with conda or pip install. 
+
+When running the exectuable file the user will be prompted via terminal, after a welcome introduction, to choose from options (1), (2), or (3). Option (1) would specify the users intent to use a univariate function, (2) - a multivariate function, and (3) - a vector function. After choosing an option the user would be asked to specify variable character(s) they'd like to use to define their function expression. 
+
+An example entry for case (1) would be `x`, as a primary varaiable character. `x` would then be stored in our *ForwardMode* class as the default character for the expression. 
+
+The user would then be prompted, again via terminal, to enter their function directly into the terminal as close to as its written. Our program would parse this input string and look to build the expression fully in our *ForwardMode* object by searching for fundamental mathemtical operations such as +, -, *, /, ^, sin, cos,exponents, ln, log, etc and some of the other ways they could be written (i.e ^ == ** , etc). Once entered, our program would re-display their entry, but this time in our *ForwardMode*'s version to ensure accuracy of intent by the user, with them being able to select (1) if everything appears correctly or (2) if they need to re-enter the expression.
+
+Lastly, after confirmation that the expression was interpreted by *ForwardMode* correctly, the user will be asked to specify the value(s) at which the expression should be evaluated at for each input variable they entered earlier.
+
+*ForwardMode* then would calculate the value of the function and its derivative at the point values specificed by the user and output them in the terminal.
+
+The input/output UI will be encapsulated in a `while` loop such that the user can continue to define and evaluate more functions, or quit when done.
 
 ### Response
 
