@@ -11,11 +11,10 @@
   - [Finite Differences](#finite-differences)
   - [Advantages of Auto-Differentiation](#advantages-of-auto-differentiation)
 - [Background](#background)
+  - [Chain-Rule: The Core of Automatic Differentiation](#chain-rule-the-core-of-automatic-differentiation)
+- [How to Use <PACKAGE NAME>](#how-to-use-package-name)
   - [Prompt](#prompt)
   - [Response](#response)
-- [How to Use <PACKAGE NAME>](#how-to-use-package-name)
-  - [Prompt](#prompt-1)
-  - [Response](#response-1)
 - [Software Organization](#software-organization)
   - [Directory Structure](#directory-structure)
   - [Software modules and basic functionality](#software-modules-and-basic-functionality)
@@ -24,7 +23,7 @@
 - [Implementation](#implementation)
   - [Overview of classes:](#overview-of-classes)
     - [*ParseTree* class:](#parsetree-class)
-  - [*ForwardMode* class:](#forwardmode-class)
+    - [*ForwardMode* class:](#forwardmode-class)
   - [External dependencies:](#external-dependencies)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
