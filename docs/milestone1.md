@@ -125,9 +125,64 @@ In other words, if we can express a large, complex function as the nesting of sm
 
 ### 2.2 Graph Structure of Calculations
 
-This approach naturally lends itself to writing out a complex function as the composite of 
+This approach naturally lends itself to writing out a complex function as the composite of elementary functions, where each node represents a function and the directed edges represent the computations that connect the nodes. As we go from the inputs to the final function, we perform the computations to evaluate the value of the function and its derivative for a given value.
+
+This graph can be represented in a table form with the evaluation trace as well.
+
+**Worked Example**
+
+To illustrate how the graph structure works, we consider the following function
+
+<p align="center"><img src="/docs/tex/8b4b4deb6b81a4c53ea7d3fdb9710961.svg?invert_in_darkmode&sanitize=true" align=middle width=159.17237655pt height=18.312383099999998pt/></p>
+
+evaluated at <img src="/docs/tex/421be8f1bb5825475d922bd3c677cf00.svg?invert_in_darkmode&sanitize=true" align=middle width=107.54176454999998pt height=24.65753399999998pt/>.
+
+The evaluation trace looks like the following.
+
+| Trace   | Elementary Function      | Current Value           | Elementary Function Derivative       | <img src="/docs/tex/644271f822c0a2a59907b3c936120ed7.svg?invert_in_darkmode&sanitize=true" align=middle width=21.153044549999994pt height=22.465723500000017pt/> Value  | <img src="/docs/tex/120888ade278ad9af7bffb67ec5c439f.svg?invert_in_darkmode&sanitize=true" align=middle width=20.77827839999999pt height=22.465723500000017pt/> Value  |
+| :---: | :-----------------: | :-----------: | :----------------------------: | :-----------------:  | :-----------------: |
+| <img src="/docs/tex/7e0dded6496a3ed3f3c0db74604087ac.svg?invert_in_darkmode&sanitize=true" align=middle width=15.94753544999999pt height=14.15524440000002pt/> | <img src="/docs/tex/7e0dded6496a3ed3f3c0db74604087ac.svg?invert_in_darkmode&sanitize=true" align=middle width=15.94753544999999pt height=14.15524440000002pt/> | <img src="/docs/tex/332cc365a4987aacce0ead01b8bdcc0b.svg?invert_in_darkmode&sanitize=true" align=middle width=9.39498779999999pt height=14.15524440000002pt/> | <img src="/docs/tex/74370f5631ffcc0d659be47a6e26ea60.svg?invert_in_darkmode&sanitize=true" align=middle width=15.94753544999999pt height=21.95701200000001pt/> | <img src="/docs/tex/034d0a6be0424bffe9a6e7ac9236c0f5.svg?invert_in_darkmode&sanitize=true" align=middle width=8.219209349999991pt height=21.18721440000001pt/> | <img src="/docs/tex/29632a9bf827ce0200454dd32fc3be82.svg?invert_in_darkmode&sanitize=true" align=middle width=8.219209349999991pt height=21.18721440000001pt/> |
+| <img src="/docs/tex/345508ce4e933b712fe803f442f74d63.svg?invert_in_darkmode&sanitize=true" align=middle width=15.94753544999999pt height=14.15524440000002pt/> | <img src="/docs/tex/345508ce4e933b712fe803f442f74d63.svg?invert_in_darkmode&sanitize=true" align=middle width=15.94753544999999pt height=14.15524440000002pt/> | <img src="/docs/tex/deceeaf6940a8c7a5a02373728002b0f.svg?invert_in_darkmode&sanitize=true" align=middle width=8.649225749999989pt height=14.15524440000002pt/> | <img src="/docs/tex/017c3766de1bf45f78530c90083b6d31.svg?invert_in_darkmode&sanitize=true" align=middle width=15.94753544999999pt height=21.95701200000001pt/> | <img src="/docs/tex/29632a9bf827ce0200454dd32fc3be82.svg?invert_in_darkmode&sanitize=true" align=middle width=8.219209349999991pt height=21.18721440000001pt/> | <img src="/docs/tex/034d0a6be0424bffe9a6e7ac9236c0f5.svg?invert_in_darkmode&sanitize=true" align=middle width=8.219209349999991pt height=21.18721440000001pt/> |
+
+The evaluation trace can be visualized using the following graph.
 
 ### 2.3 Dual Numbers
+
+Dual numbers are a mathematical construct similar in structure to complex numbers. Dual numbers have a real and dual part, so we can write the dual number <img src="/docs/tex/190083ef7a1625fbc75f243cffb9c96d.svg?invert_in_darkmode&sanitize=true" align=middle width=9.81741584999999pt height=22.831056599999986pt/> as
+
+<p align="center"><img src="/docs/tex/007073b6000030cd13e94e70f3194bb8.svg?invert_in_darkmode&sanitize=true" align=middle width=80.5801128pt height=16.3763325pt/></p>
+
+where <img src="/docs/tex/deceeaf6940a8c7a5a02373728002b0f.svg?invert_in_darkmode&sanitize=true" align=middle width=8.649225749999989pt height=14.15524440000002pt/> is the real part and <img src="/docs/tex/15f93b25ba881e5829e8fc647b680fb2.svg?invert_in_darkmode&sanitize=true" align=middle width=12.43916849999999pt height=24.7161288pt/> is the dual part of the dual number. The number <img src="/docs/tex/9ae7733dac2b7b4470696ed36239b676.svg?invert_in_darkmode&sanitize=true" align=middle width=7.66550399999999pt height=14.15524440000002pt/> is a constant with the special property that <img src="/docs/tex/ad6370c8c8de22b67ebb85cbc747ef57.svg?invert_in_darkmode&sanitize=true" align=middle width=45.17680365pt height=26.76175259999998pt/>. Dual numbers have the following properties.
+
+- Conjugate: The conjugate of <img src="/docs/tex/190083ef7a1625fbc75f243cffb9c96d.svg?invert_in_darkmode&sanitize=true" align=middle width=9.81741584999999pt height=22.831056599999986pt/>, denoted <img src="/docs/tex/baa7cc2f36af87229745595791fda227.svg?invert_in_darkmode&sanitize=true" align=middle width=16.55260694999999pt height=22.831056599999986pt/>, is defined as
+
+<p align="center"><img src="/docs/tex/42e4c24bdc5ef2d675290bbcd9ab906f.svg?invert_in_darkmode&sanitize=true" align=middle width=88.1372019pt height=16.3763325pt/></p>
+
+- Norm (or magnitude): The magnitude of <img src="/docs/tex/190083ef7a1625fbc75f243cffb9c96d.svg?invert_in_darkmode&sanitize=true" align=middle width=9.81741584999999pt height=22.831056599999986pt/>, denoted <img src="/docs/tex/96131d32ec473dc893b70065aa499ba2.svg?invert_in_darkmode&sanitize=true" align=middle width=74.61197204999999pt height=26.76175259999998pt/>, is defined as
+
+<p align="center"><img src="/docs/tex/ac18a53f1fa3d1c7256381bdc9e26368.svg?invert_in_darkmode&sanitize=true" align=middle width=210.26616599999997pt height=18.312383099999998pt/></p>
+
+- Polar form: The polar form of <img src="/docs/tex/190083ef7a1625fbc75f243cffb9c96d.svg?invert_in_darkmode&sanitize=true" align=middle width=9.81741584999999pt height=22.831056599999986pt/> is written
+
+<p align="center"><img src="/docs/tex/e0b801a17494cdbf8215e5075a7e5141.svg?invert_in_darkmode&sanitize=true" align=middle width=120.50710815pt height=39.452455349999994pt/></p>
+
+Salient to the question of automatic differentiation, dual numbers can be used to compute the derivatives of arbitrary functions. Suppose we have an arbitrary function <img src="/docs/tex/ffcbbb391bc04da2d07f7aef493d3e2a.svg?invert_in_darkmode&sanitize=true" align=middle width=30.61077854999999pt height=24.65753399999998pt/> that we want to take the derivative of. We can compute <img src="/docs/tex/92f07220eff922f7e9b89e3eb33b73ab.svg?invert_in_darkmode&sanitize=true" align=middle width=66.27089864999998pt height=24.65753399999998pt/>, and the real part of that computation corresponds to the value of the function at the point <img src="/docs/tex/deceeaf6940a8c7a5a02373728002b0f.svg?invert_in_darkmode&sanitize=true" align=middle width=8.649225749999989pt height=14.15524440000002pt/>, while the dual part of that computation corresponds to the value of the derivative of <img src="/docs/tex/ffcbbb391bc04da2d07f7aef493d3e2a.svg?invert_in_darkmode&sanitize=true" align=middle width=30.61077854999999pt height=24.65753399999998pt/> at the point <img src="/docs/tex/deceeaf6940a8c7a5a02373728002b0f.svg?invert_in_darkmode&sanitize=true" align=middle width=8.649225749999989pt height=14.15524440000002pt/>.
+
+**Worked Example**
+
+We can take the example of <img src="/docs/tex/03b0f6bb834ba1e41336128850fd7ab4.svg?invert_in_darkmode&sanitize=true" align=middle width=109.57177769999997pt height=26.76175259999998pt/>. Since this is a simple function, we can take its derivative symbolically.
+
+<p align="center"><img src="/docs/tex/da33f5fecc039c01d21a403ac08f810a.svg?invert_in_darkmode&sanitize=true" align=middle width=103.06488225pt height=17.2895712pt/></p>
+
+Now we use dual numbers to reach the same conclusion.
+
+<p align="center"><img src="/docs/tex/af76f82cc2530bcfec53c78bbf508f83.svg?invert_in_darkmode&sanitize=true" align=middle width=643.9938697499999pt height=18.312383099999998pt/></p>
+
+Now we use the property that <img src="/docs/tex/ad6370c8c8de22b67ebb85cbc747ef57.svg?invert_in_darkmode&sanitize=true" align=middle width=45.17680365pt height=26.76175259999998pt/> and collect the terms to get
+
+<p align="center"><img src="/docs/tex/22608f3efa3aeef755dd32728ac5e632.svg?invert_in_darkmode&sanitize=true" align=middle width=241.38656024999997pt height=18.312383099999998pt/></p>
+
+We can see that the real part of this is the value of the function at the point <img src="/docs/tex/332cc365a4987aacce0ead01b8bdcc0b.svg?invert_in_darkmode&sanitize=true" align=middle width=9.39498779999999pt height=14.15524440000002pt/>, and the dual part of this is the value of the derivative at the point <img src="/docs/tex/332cc365a4987aacce0ead01b8bdcc0b.svg?invert_in_darkmode&sanitize=true" align=middle width=9.39498779999999pt height=14.15524440000002pt/>. We do not use dual numbers directly in our package, but in the same vein, we compute and return both the value of the derivative and the value of the function at a given point.
 
 ## How to Use `Autodiff`
 
