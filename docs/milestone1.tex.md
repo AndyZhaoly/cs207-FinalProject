@@ -178,7 +178,11 @@ $$ g'(x) = 2x + 2 $$
 
 Now we use dual numbers to reach the same conclusion.
 
-$$ g(x + x\varepsilon) = (x + x\varepsilon + 1)^2 = (x + x\varepsilon)^2 + 2(x + x\varepsilon) + 1 = x^2 + 2x^2\varepsilon + x^2\varepsilon^2 + 2x + 2x\varepsilon + 1 $$
+$$ g(x + x\varepsilon) = (x + x\varepsilon + 1)^2 = (x + x\varepsilon)^2 + 2(x + x\varepsilon) + 1 $$
+
+After expansion, we have
+
+$$ g(x + x\varepsilon) = x^2 + 2x^2\varepsilon + x^2\varepsilon^2 + 2x + 2x\varepsilon + 1 $$
 
 Now we use the property that $\varepsilon^2 = 0$ and collect the terms to get
 
