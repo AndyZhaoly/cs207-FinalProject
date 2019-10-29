@@ -54,7 +54,7 @@ Once phrased as an optimization problem, possibly subject to some constraints, a
 
 Take, for example, the standard Ordinary Least Squares (OLS) estimator for a linear regression model of the form 
 
-$$ Y = X^T\beta + \varepsilon $$
+$$ Y = X\beta + \varepsilon $$
 
 Suppose we want to find the estimate of $\beta$ denoted $\hat{\beta}$ that minimizes the Mean-Squared-Error (MSE) defined as $(Y-X\beta)^T(Y-X\beta)$. We derive the First Order Conditions (FOCs) required to solve the optimization problem. Define
 
