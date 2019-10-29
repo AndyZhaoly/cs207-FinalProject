@@ -223,25 +223,45 @@ The input/output UI will be encapsulated in a `while` loop such that the user ca
 ### 4.1 Directory Structure 
 
 ```
-Autodiff
-│   README.md
-|   LICENCSE.md
-│   .travis.yaml
-|   setup.py
-|   .gitignore	
-└─── Autodiff
-│   │   __init__.py
-│   │   forward_mode.py
-│   │   binary_tree.py
-│   │   interface.py
-│   │   junk.py
-│   │   parse_expression.py
-│   │   parse_tree.py
-│   │   reverse_mode.py
-│   │   terms.py
-│   └─── test
-│       │   test.py
+├───docs/
+│   ├───m1_image/
+│   │   └─── ...
+│   ├───tex/
+│   │   └─── ...
+│   ├───milestone1.md
+│   └───milestone1.tex.md
+├───implementation/
+│   ├───binary_tree.py
+│   ├───forward_mode.py
+│   ├───interface.py
+│   ├───junk.py
+│   ├───parse_expression.py
+│   ├───parse_tree.py
+│   ├───reverse_mode.py
+│   └───terms.py
+├───minutes/
+│   └───1017_oct17.md
+├───.pre-commit-config.yaml
+├───.travis.yml
+├───README.md
+├───LICENSE
+└───requirements.txt
 ```
+**Root Directory**
+
+The root of the repository contains the following:
+
+- `LICENSE` containing the license for the project
+- `README.md` for the entire project.
+- `requirements.txt` that outline the python dependencies for installing our package
+- `.travis.yml` which contains our configuration for `TravisCI`
+- `.pre-commit-config.yaml` which contains configuration for implementing [doctoc](https://github.com/thlorenz/doctoc) as a [pre-commit](https://pre-commit.com/) hook
+  - This allows for automatic generation of tables of contents for all our `.md` files
+
+**docs/ Directory**
+
+The `docs/` directory contains documentation and milestones as required by 
+
 
 ### 4.2 Software modules and basic functionality
 
@@ -251,7 +271,7 @@ Autodiff
 
 ### 4.3 Software test suite
 
-- The test suite will will be placed in the test directory. `Travis CI` will be used for continous integration testing. `Codecov` will be used for code coverage testing.
+- The test suite will will be placed in the test directory. `TravisCI` will be used for continous integration testing. `Codecov` will be used for code coverage testing.
 
 ### 4.4 Software Distribution 
 
