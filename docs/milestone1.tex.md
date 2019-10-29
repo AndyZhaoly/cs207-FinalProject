@@ -166,19 +166,7 @@ Dual numbers are a mathematical construct similar in structure to complex number
 
 $$ f = y + \varepsilon y' $$
 
-where $y$ is the real part and $y'$ is the dual part of the dual number. The number $\varepsilon$ is a constant with the special property that $\varepsilon^2 = 0$. Dual numbers have the following properties.
-
-- Conjugate: The conjugate of $f$, denoted $f^*$, is defined as
-
-$$ f^* = y - \varepsilon y' $$
-
-- Norm (or magnitude): The magnitude of $f$, denoted $|f|^2 = ff^*$, is defined as
-
-$$ |f|^2 = (y + \varepsilon y')(y - \varepsilon y') = y^2 $$
-
-- Polar form: The polar form of $f$ is written
-
-$$ f = y\left(1 + \frac{y'}{y}\varepsilon \right) $$
+where $y$ is the real part and $y'$ is the dual part of the dual number. The number $\varepsilon$ is a constant with the special property that $\varepsilon^2 = 0$.
 
 Salient to the question of automatic differentiation, dual numbers can be used to compute the derivatives of arbitrary functions. Suppose we have an arbitrary function $g(x)$ that we want to take the derivative of. We can compute $g(y + \varepsilon y)$, and the real part of that computation corresponds to the value of the function at the point $y$, while the dual part of that computation corresponds to the value of the derivative of $g(x)$ at the point $y$.
 
